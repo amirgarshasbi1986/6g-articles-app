@@ -1,0 +1,17 @@
+[
+  {
+    "id": 74,
+    "title": "Terahertz Communications and Sensing for 6G and Beyond: A Comprehensive Review",
+    "authors": "Wei Jiang, Qiuheng Zhou, Jiguang He, Mohammad Asif Habibi, Sergiy Melnyk, M. E. Absi, Binyang Han, M. D. Renzo, H. Schotten, F. Luo, T. S. El-Bawab, M. Juntti, M. Debbah, Victor C. M. Leung",
+    "publish_date": null,
+    "link": "https://www.semanticscholar.org/paper/360c3151ca6870f0ea41ec92227fe50d3bad3a7b",
+    "summary": "This paper provides a comprehensive survey of terahertz (THz) communications and sensing technologies, exploring their advantages, applications, and challenges. It examines radio propagation, channel modeling, transceiver requirements, and synergi...",
+    "key_points": [
+      "Terahertz band enables high spatial resolution",
+      "Advantages include large unused frequency bands",
+      "Challenges include high propagation losses and antenna design"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T06:30:50.405630"
+  }
+]

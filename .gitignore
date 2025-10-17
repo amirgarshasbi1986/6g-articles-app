@@ -1,0 +1,15 @@
+# Virtual env
+backend/venv/
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+# Database (if SQLite)
+*.db
+# Large media folders (if you don't want to version videos/podcasts - they're large; use external storage if needed)
+videos/
+podcasts/
+articles/
+# Logs/temp
+*.log
+*.tmp

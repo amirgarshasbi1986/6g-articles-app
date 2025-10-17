@@ -1,0 +1,392 @@
+[
+  {
+    "id": 1,
+    "title": "Test Title",
+    "authors": "Test Authors",
+    "publish_date": "2025-09-23",
+    "link": "test.com",
+    "summary": "Test Summary",
+    "key_points": [
+      "Key 1",
+      "Key 2"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:09:09.617551"
+  },
+  {
+    "id": 2,
+    "title": "Generalized Beyond-Diagonal RIS Architectures: Theory and Design via\n  Structure-oriented Symmetric Unitary Projection",
+    "authors": "Xiaohua Zhou, Tianyu Fang, Yijie Mao, Bruno Clerckx",
+    "publish_date": "2025-09-22",
+    "link": "http://arxiv.org/abs/2509.17804v1",
+    "summary": "{\"summary\": \"The article proposes two novel reconfigurable intelligent surface (RIS) architectures for 6G and beyond, namely stem-connected RIS and cluster-connected RIS, to balance circuit complexity and performance. The stem-connected RIS achieves the same performance as fully-connected RIS with reduced complexity, while the cluster-connected RIS offers a unified framework that generalizes existing BD-RIS architectures.\", \"key_points\": [\"Stem-connected RIS reduces circuit complexity without sacrificing performance\", \"Cluster-connected RIS provides a unified framework for various BD-RIS architectures\", \"The proposed architectures aim to balance circuit complexity and performance in 6G and beyond\"]}\n\nNote: The summary focuses on the technical insights of the article, highlighting the two novel RIS architectures and their benefits. The key points provide a concise overview of the main ideas presented in the article.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:14:21.825246"
+  },
+  {
+    "id": 3,
+    "title": "SSNet: Flexible and robust channel extrapolation for fluid antenna\n  systems enabled by an self-supervised learning framework",
+    "authors": "Yuan Gao, Yiming Liu, Runze Yu, Shengli Liu, Yanliang Jin, Shunqing Zhang, Shugong Xu, Xiaoli Chu",
+    "publish_date": "2025-09-22",
+    "link": "http://arxiv.org/abs/2509.17797v1",
+    "summary": "This article discusses the challenges of obtaining accurate channel state information (CSI) in Fluid Antenna Systems (FAS) for 6G communication, which is crucial for enhancing spectral efficiency and robustness. Traditional methods are computationally intensive or lack adaptability, while data-driven deep learning approaches require extensive training and are vulnerable to noise and hardware imperfections. To address these challenges, a novel self-supervised learning network (SSNet) is introduced for efficient and adaptive channel extrapolation in FAS.",
+    "key_points": [
+      "FAS poses challenges for obtaining accurate CSI due to its complex physical structure",
+      "Traditional methods lack adaptability or are computationally intensive",
+      "Data-driven deep learning approaches require extensive training and are vulnerable to noise and hardware imperfections",
+      "A novel self-supervised learning network (SSNet) is introduced for efficient and adaptive channel extrapolation in FAS"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:18:00.630639"
+  },
+  {
+    "id": 4,
+    "title": "Beyond Fresnel Wave Surfaces: Off-Shell Photonic Density of States and\n  Near-Fields in Isotropy-Broken Materials with Loss or Gain",
+    "authors": "Maxim Durach, David Keene",
+    "publish_date": "2025-09-22",
+    "link": "http://arxiv.org/abs/2509.17320v1",
+    "summary": "{\"summary\": \"This article extends the concept of Fresnel wave surfaces by incorporating near-field effects and non-Hermitian responses in media with loss, gain, or non-reciprocity. The approach reinterprets near fields as off-shell electromagnetic modes and shows how photonic density of states distributions acquire Lorentzian broadening in non-reciprocal media.\", \"key_points\": [\"Extension of Fresnel wave surfaces to include near-field effects and non-Hermitian responses\", \"Near fields reinterpreted as off-shell electromagnetic modes\", \"Lorentzian broadening of photonic density of states distributions in non-reciprocal media\"]}\n\nNote: The article appears to be a technical paper that explores the concept of Fresnel wave surfaces and its application to 6G technology.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:21:30.105838"
+  },
+  {
+    "id": 5,
+    "title": "Resilient Signal Reflection under CSI Perturbations: A Robust Approach\n  for Secure RIS Communication",
+    "authors": "Mahdi Shamsi, Hadi Zayyani, Farokh Marvasti",
+    "publish_date": "2025-09-21",
+    "link": "http://arxiv.org/abs/2509.17181v1",
+    "summary": "This article addresses the challenge of mitigating Channel State Information (CSI) perturbations in Reconfigurable Intelligent Surfaces (RIS)-aided systems for secure communication scenarios. A robust approach is developed using a first-order approximation technique to strengthen the resilience of RIS configurations against CSI imperfections, considering both untrusted user interception and stealth radar applications.",
+    "key_points": [
+      "Robust approach uses first-order approximation technique",
+      "Method optimizes signal reflection and transmission in presence of eavesdroppers",
+      "Simulation results show notable gains in security and efficiency with low computational complexity"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:24:13.928258"
+  },
+  {
+    "id": 6,
+    "title": "Analysis of an Architecture for Integrated Sensing and Communication in\n  5G OpenRAN",
+    "authors": "Daniel Lindenschmitt, Tobias Jung, Prudhvi Kumar Kakani, Torsten Reissland, Norman Franchi, Hans D. Schotten",
+    "publish_date": "2025-09-21",
+    "link": "http://arxiv.org/abs/2509.16917v1",
+    "summary": "This paper explores Integrated Sensing and Communication (ISAC) in a 5G Open Radio Access Network (OpenRAN) environment, focusing on secure and modular deployment. It evaluates radar setup options, signal types, and processing placement within the RAN, considering performance and security implications.",
+    "key_points": [
+      "The proposed architecture minimizes hardware modifications by leveraging sniffer Radio Units (RUs) and existing OpenRAN fronthaul interfaces",
+      "Security threats such as passive sensing, spoofing, and privacy violations are mapped to mitigation strategies within the OpenRAN framework",
+      "The result is a deployment blueprint applicable to both Public Land Mobile Networks (PLMNs) and Non-Public Networks (NPNs), supporting future 6G ISA"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-23T19:27:35.373225"
+  },
+  {
+    "id": 13,
+    "title": "VolSplat: Rethinking Feed-Forward 3D Gaussian Splatting with\n  Voxel-Aligned Prediction",
+    "authors": "Weijie Wang, Yeqing Chen, Zeyu Zhang, Hengyu Liu, Haoxiao Wang, Zhiyuan Feng, Wenkang Qin, Zheng Zhu, Donny Y. Chen, Bohan Zhuang",
+    "publish_date": "2025-09-23",
+    "link": "http://arxiv.org/abs/2509.19297v1",
+    "summary": "This article discusses the limitations of existing methods for novel view synthesis and introduces VolSplat, a new multi-view feed-forward paradigm that replaces pixel alignment with voxel-aligned Gaussians. This approach addresses challenges such as reliance on input views, biased density distributions, and alignment errors.",
+    "key_points": [
+      "Introduces VolSplat, a new multi-view feed-forward paradigm for novel view synthesis",
+      "Replaces pixel alignment with voxel-aligned Gaussians to overcome limitations",
+      "Enables adaptive control over Gaussian density based on 3D scene complexity"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980829"
+  },
+  {
+    "id": 14,
+    "title": "A Novel Site-Specific Inference Model for Urban Canyon Channels: From\n  Measurements to Modeling",
+    "authors": "Junzhe Song, Ruisi He, Mi Yang, Zhengyu Zhang, Xinwen Chen, Xiaoying Zhang, Bo Ai",
+    "publish_date": "2025-09-23",
+    "link": "http://arxiv.org/abs/2509.19275v1",
+    "summary": "{\"summary\": \"This article proposes a site-specific channel inference model for urban canyon scenarios, leveraging environmental geometry and sub-6GHz channel measurements to capture unique channel characteristics. The model extracts multipath components (MPCs) and clusters them based on geometric propagation, allowing for an interpretable mapping between physical environment and statistical characteristics of MPCs.\", \"key_points\": [\"Site-specific channel inference model for urban canyon scenarios\", \"Environmental geometry and sub-6GHz channel measurements used to parameterize the model\", \"Multipath components (MPCs) extracted and clustered based on geometric propagation\"]}\n\nNote: Since the provided text is focused on a specific aspect of 6G technology (channel modeling for urban canyon scenarios), there are no explicit technical insights relevant to 6G technology itself. The summary and key points focus on the proposed channel inference model and its applications in urban canyon environments.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980839"
+  },
+  {
+    "id": 15,
+    "title": "RGDBEK: Randomized Greedy Double Block Extended Kaczmarz Algorithm with\n  Hybrid Parallel Implementation and Applications",
+    "authors": "Aneesh Panchal, Ratikanta Behera",
+    "publish_date": "2025-09-23",
+    "link": "http://arxiv.org/abs/2509.19267v1",
+    "summary": "{\"summary\": \"This article proposes a novel Kaczmarz algorithm called Randomized Greedy Double Block Extended Kaczmarz (RGDBEK) for efficient large-scale linear system solutions. The algorithm mitigates the seesaw effect and enhances convergence robustness by employing a randomized selection strategy for column and row blocks based on residual-derived probability distributions.\", \"key_points\": [\"The proposed RGDBEK algorithm mitigates the traditional seesaw effect\", \"The algorithm employs a randomized selection strategy for column and row blocks\", \"RGDBEK establishes linear convergence under standard assumptions\"]}\n\nNote: Since the provided text is not directly related to 6G technology, I did not find any technical insights relevant to 6G. The summary focuses on the novel Kaczmarz algorithm proposed in the article, highlighting its key features and benefits.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980841"
+  },
+  {
+    "id": 16,
+    "title": "Proactive-reactive detection and mitigation of intermittent faults in\n  robot swarms",
+    "authors": "Sinan O\u011fuz, Emanuele Garone, Marco Dorigo, Mary Katherine Heinrich",
+    "publish_date": "2025-09-23",
+    "link": "http://arxiv.org/abs/2509.19246v1",
+    "summary": "{\"summary\": \"This article proposes a novel proactive-reactive strategy for detecting and mitigating intermittent faults in robot swarms with persistent networks. The approach uses self-organized backup layers and distributed consensus in a multiplex network to address the challenges of transient errors.\", \"key_points\": [\"Proactive-reactive strategy for detecting and mitigating intermittent faults\", \"Self-organized backup layers and distributed consensus in a multiplex network\", \"Persistent network structures enable detection of intermittent faults\"]}\n\nNote: The provided text does not specifically discuss 6G technology, but rather proposes a solution for addressing intermittent faults in robot swarms. If you would like me to summarize something related to 6G, please provide the relevant article or information.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980843"
+  },
+  {
+    "id": 17,
+    "title": "Watts and Drops: Co-Scheduling Power and Water in Desalination Plants",
+    "authors": "Ahmed S. Alahmed, Audun Botterud, Saurabh Amin, Ali T. Al-Awami",
+    "publish_date": "2025-09-23",
+    "link": "http://arxiv.org/abs/2509.19243v1",
+    "summary": "I apologize, but this article does not appear to be related to 6G technology. The text discusses a mathematical framework for scheduling water and electricity in a renewable energy-powered desalination plant. It is an optimization problem focused on profit maximization.\n\nAs the article is not relevant to 6G technology, I will return an empty summary and key points JSON array:\n\n{\"summary\": \"\", \"key_points\": []}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980844"
+  },
+  {
+    "id": 18,
+    "title": "6G wireless communication systems: Applications, requirements, technologies, challenges, and research directions",
+    "authors": "MZ Chowdhury, M Shahjalal, S Ahmed",
+    "publish_date": "2020-01-01",
+    "link": "https://ieeexplore.ieee.org/abstract/document/9144301/",
+    "summary": "Please provide the 6G article text, and I'll be happy to summarize it for you. Once I receive the text, I'll return a JSON object with a summary and key points.\n\nPlease paste the article text here:",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980846"
+  },
+  {
+    "id": 19,
+    "title": "6G wireless communications networks: A comprehensive survey",
+    "authors": "M Alsabah, MA Naser, BM Mahmmod",
+    "publish_date": "2021-01-01",
+    "link": "https://ieeexplore.ieee.org/abstract/document/9598915/",
+    "summary": "I'm ready to summarize! Please provide the text of the 6G article, and I'll condense it into a 2-paragraph summary with technical insights.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980847"
+  },
+  {
+    "id": 20,
+    "title": "6G and beyond: The future of wireless communications systems",
+    "authors": "IF Akyildiz, A Kak, S Nie",
+    "publish_date": "2020-01-01",
+    "link": "https://ieeexplore.ieee.org/abstract/document/9145564/",
+    "summary": "Please provide the 6G article text, and I'll be happy to summarize it for you in 2 concise paragraphs and highlight key points as a JSON array.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980849"
+  },
+  {
+    "id": 21,
+    "title": "6G wireless communications: Vision and potential techniques",
+    "authors": "P Yang, Y Xiao, M Xiao, S Li",
+    "publish_date": "2019-01-01",
+    "link": "https://ieeexplore.ieee.org/abstract/document/8782879/",
+    "summary": "Please provide the 6G article text, and I'll be happy to summarize it for you.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980850"
+  },
+  {
+    "id": 22,
+    "title": "Perspectives on 6G wireless communications",
+    "authors": "C Yeh, G Do Jo, YJ Ko, HK Chung",
+    "publish_date": "2023-01-01",
+    "link": "https://www.sciencedirect.com/science/article/pii/S240595952100182X",
+    "summary": "I'm happy to help! However, I need you to provide the text of the 6G article. Please paste it in here, and I'll summarize it for you.\n\nOnce you do that, I'll return a JSON object with a summary of the article's technical insights and key points relevant to 6G technology.\n\nPlease go ahead and provide the text!",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-24T06:19:17.980852"
+  },
+  {
+    "id": 23,
+    "title": "EmbeddingGemma: Powerful and Lightweight Text Representations",
+    "authors": "Henrique Schechter Vera, Sahil Dua, Biao Zhang, Daniel Salz, Ryan Mullins, Sindhu Raghuram Panyam, Sara Smoot, Iftekhar Naim, Joe Zou, Feiyang Chen, Daniel Cer, Alice Lisak, Min Choi, Lucas Gonzalez, Omar Sanseviero, Glenn Cameron, Ian Ballantyne, Kat Black, Kaifeng Chen, Weiyi Wang, Zhe Li, Gus Martins, Jinhyuk Lee, Mark Sherwood, Juyeong Ji, Renjie Wu, Jingxiao Zheng, Jyotinder Singh, Abheesht Sharma, Divya Sreepat, Aashi Jain, Adham Elarabawy, AJ Co, Andreas Doumanoglou, Babak Samari, Ben Hora, Brian Potetz, Dahun Kim, Enrique Alfonseca, Fedor Moiseev, Feng Han, Frank Palma Gomez, Gustavo Hern\u00e1ndez \u00c1brego, Hesen Zhang, Hui Hui, Jay Han, Karan Gill, Ke Chen, Koert Chen, Madhuri Shanbhogue, Michael Boratko, Paul Suganthan, Sai Meher Karthik Duddu, Sandeep Mariserla, Setareh Ariafar, Shanfeng Zhang, Shijie Zhang, Simon Baumgartner, Sonam Goenka, Steve Qiu, Tanmaya Dabral, Trevor Walker, Vikram Rao, Waleed Khawaja, Wenlei Zhou, Xiaoqi Re ... et al.",
+    "publish_date": "2025-09-24",
+    "link": "http://arxiv.org/abs/2509.20354v1",
+    "summary": "Here is a 2-paragraph summary of the article:\n\nThis article introduces EmbeddingGemma, a lightweight open text embedding model that achieves state-of-the-art results on the Massive Text Embedding Benchmark (MTEB) across multilingual, English, and code domains. The model's training recipe involves encoder-decoder initialization and geometric embedding distillation to capture knowledge from larger models.\n\nThe article highlights the model's robustness, expressiveness, and generalizability, achieved through a spread-out regularizer and checkpoint merging. Notably, EmbeddingGemma outperforms prior top models with fewer than 500M parameters, offering an exceptional performance-to-cost ratio. The model also shows resilience to quantization of model weights or truncation of embedding outputs.\n\nHere are the key points in JSON format:\n\n{\"summary\": \"This article introduces a lightweight open text embedding model that achieves state-of-the-art results on MTEB across multilingual, English, and code domains.\", \"key_points\": [\"EmbeddingGemma is a new lightweight, open text embedding model\", \"It achieves state-of-the-art results on MTEB with fewer than 500M parameters\", \"The model shows resilience to quantization of model weights or truncation of embedding outputs\"]}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090321"
+  },
+  {
+    "id": 24,
+    "title": "xGFabric: Coupling Sensor Networks and HPC Facilities with Private 5G\n  Wireless Networks for Real-Time Digital Agriculture",
+    "authors": "Liubov Kurafeeva, Alan Subedi, Ryan Hartung, Michael Fay, Avhishek Biswas, Shantenu Jha, Ozgur O. Kilic, Chandra Krintz, Andre Merzky, Douglas Thain, Mehmet C. Vuran, Rich Wolski",
+    "publish_date": "2025-09-24",
+    "link": "http://arxiv.org/abs/2509.20340v1",
+    "summary": "{\"summary\": \"The article highlights the need to couple distributed sensor networks with centralized high-performance computing facilities in advanced scientific applications. It uses Citrus Under Protective Screening (CUPS) as an example, where sensors monitor environmental conditions and detect damage, requiring access to computational fluid dynamics codes for modeling and real-time interventions.\", \"key_points\": [\"Private 5G networks can provide low latency, high throughput, and reliability necessary for near-real-time coupling of edge sensor networks with HPC simulation\", \"Sensor networks offer low-performance, limited-capacity, unreliable data access, while high-performance facilities provide enormous computing power through high-latency batch processing\", \"The challenge is addressing the contrast between these two domains\"]}\n\nNote: Since the text does not specifically discuss 6G technology, I have summarized and highlighted key points related to the intersection of sensor networks, high-performance computing, and private 5G networks.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090339"
+  },
+  {
+    "id": 25,
+    "title": "Adaptive Event-Triggered Policy Gradient for Multi-Agent Reinforcement\n  Learning",
+    "authors": "Umer Siddique, Abhinav Sinha, Yongcan Cao",
+    "publish_date": "2025-09-24",
+    "link": "http://arxiv.org/abs/2509.20338v1",
+    "summary": "{\"summary\": \"This article proposes two novel frameworks for multi-agent reinforcement learning (MARL): ET-MAPG and AET-MAPG. ET-MAPG integrates event-triggering policy learning into the control policy learning process, enabling agents to determine when to take an action. AET-MAPG is a variant that adds attention-based communication patterns, allowing agents to selectively communicate with other agents and optimize coordination.\", \"key_points\": [\"ET-MAPG integrates event-triggering policy learning into control policy learning\", \"AET-MAPG uses attention-based communication patterns for selective agent interaction\", \"Both frameworks aim to optimize coordination in MARL scenarios\"]}\n\nNote: Since the provided text is a research article, I focused on summarizing the technical insights and key points related to 6G technology. As there is no direct mention of 6G in the text, I did not include any specific 6G-related information in the summary or key points.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090344"
+  },
+  {
+    "id": 26,
+    "title": "Adversarial Pursuits in Cislunar Space",
+    "authors": "Filippos Fotiadis, Quentin Rommel, Gregory Falco, Ufuk Topcu",
+    "publish_date": "2025-09-24",
+    "link": "http://arxiv.org/abs/2509.20330v1",
+    "summary": "This article discusses a pursuit-evasion scenario in cislunar space, where an evader must avoid a pursuer-jammer while remaining close to its nominal trajectory. The interaction is modeled as a zero-sum adversarial differential game cast in the circular restricted three-body problem.",
+    "key_points": [
+      "Pursuit-evasion scenario in cislunar space",
+      "Zero-sum adversarial differential game model",
+      "Circular restricted three-body problem formulation"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090347"
+  },
+  {
+    "id": 27,
+    "title": "Modularity from $q$-series",
+    "authors": "Ken Ono",
+    "publish_date": "2025-09-24",
+    "link": "http://arxiv.org/abs/2509.20316v1",
+    "summary": "I apologize, but the provided text does not appear to be related to 6G technology. The article seems to be discussing mathematical concepts, specifically $q$-series and modular functions, which are not relevant to 6G or any other wireless communication technology.\n\nAs a result, I will return an empty summary and key points:\n\n{\"summary\": \"\", \"key_points\": []}\n\nPlease provide a different text related to 6G technology for me to summarize.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090349"
+  },
+  {
+    "id": 28,
+    "title": "Towards 6G wireless communication networks: vision, enabling technologies, and new paradigm shifts",
+    "authors": "X. You, Cheng-Xiang Wang, Jie Huang, Xiqi Gao, Zaichen Zhang, Mao Wang, Yongming Huang, Chuan Zhang, Yanxiang Jiang, Jiaheng Wang, Min Zhu, B. Sheng, Dongmin Wang, Zhiwen Pan, Pengcheng Zhu, Yang Yang, Zening Liu, Ping Zhang, Xiaofeng Tao, Shaoqian Li, Zhimin Chen, Xinying Ma, I. Chih-Lin, Shuangfeng Han, Ke Li, Chengkang Pan, Zhiming Zheng, L. Hanzo, X. Shen, Y. Guo, Z. Ding, H. Haas, W. Tong, Peiying Zhu, Ganghua Yang, Jue Wang, E. Larsson, H. Ngo, W. Hong, Haiming Wang, Debin Hou, Jixin Chen, Zhe Chen, Z. Hao, Geoffrey Y. Li, R. Tafazolli, Yue Gao, H. Poor, G. Fettweis, Ying-Chang Liang",
+    "publish_date": "2020-11-24",
+    "link": "https://www.semanticscholar.org/paper/d5fd1dc358316904069275d3b6cbff3141e021e0",
+    "summary": "The article discusses the limitations of 5G wireless communication networks and the need for sixth generation (6G) technology to meet future requirements. To achieve this, 6G networks will rely on new enabling technologies such as waveform design, multiple access, channel coding schemes, and multi-antenna technologies. The vision for 6G is that it will have four paradigm shifts, including global coverage, enhanced spectral/energy/cost efficiency, better intelligence level and security.",
+    "key_points": [
+      "New enabling technologies will be used in 6G networks",
+      "Global coverage is a key requirement for 6G",
+      "Four paradigm shifts are expected in 6G technology"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090352"
+  },
+  {
+    "id": 29,
+    "title": "6G Wireless Communication Systems: Applications, Requirements, Technologies, Challenges, and Research Directions",
+    "authors": "M. Z. Chowdhury, M. Shahjalal, Shakil Ahmed, Y. Jang",
+    "publish_date": "2019-09-25",
+    "link": "https://www.semanticscholar.org/paper/f735c6086476893c6a0faefe148a43e97caba311",
+    "summary": "This article discusses the vision for future 6G wireless communication and its network architecture. It highlights the need to address fundamental issues such as higher system capacity, data rate, latency, security, and quality of service compared to 5G. Emerging technologies like AI, terahertz communications, and quantum communications are expected to play a key role in shaping the future of 6G.",
+    "key_points": [
+      "Higher system capacity, data rate, latency, security, and QoS are fundamental issues that need to be addressed in 6G",
+      "Emerging technologies such as AI, terahertz communications, and quantum communications will shape the future of 6G",
+      "The 6G network architecture is expected to integrate various emerging technologies"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090355"
+  },
+  {
+    "id": 30,
+    "title": "Electromagnetic Information Theory: Fundamentals and Applications for 6G Wireless Communication Systems",
+    "authors": "Chengxiang Wang, Yue Yang, Jie Huang, Xiqi Gao, T. Cui, Lajos Hanzo",
+    "publish_date": "2024-01-17",
+    "link": "https://www.semanticscholar.org/paper/3a0f43729a07126ecdd95285c8a7ca73c9e89c58",
+    "summary": "The article highlights the importance of integrating electromagnetic theory, information theory, antenna theory, and wireless propagation channel modeling theory to tackle the challenges of seamless coverage in 3D space for 6G networks. This integration is necessary to acquire CSI and calculate channel capacity anywhere and anytime.",
+    "key_points": [
+      "Integration of four fundamental theories is crucial for 6G network development",
+      "Seamless coverage in 3D space requires joint modeling of antennas and wireless propagation channels",
+      "Ultra-massive MIMO and holographic MIMO technologies necessitate intricate interaction with wireless environments"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090358"
+  },
+  {
+    "id": 31,
+    "title": "A Review of Integrated Systems and Components for 6G Wireless Communication in the D-Band",
+    "authors": "Tim Maiwald, Teng Li, George-Roberto Hotopan, Katharina Kolb, Karina Disch, Julian Potschka, Alexander Haag, M. Dietz, B. Debaillie, T. Zwick, K. Aufinger, D. Ferling, R. Weigel, A. Visweswaran",
+    "publish_date": "2023-03-01",
+    "link": "https://www.semanticscholar.org/paper/d16028dacc8ff20da9e7001ef95dc750e7c0e4c4",
+    "summary": "This article discusses the potential of the $D$-band (110-170 GHz) for future wireless communication technologies, particularly 6G systems. The $D$-band offers high aggregate bandwidths, low atmospheric absorption, and multi-GHz operation at amenable fractional bandwidths, making it a promising candidate for efficient, highly integrated wireless-communication systems with data rates approaching 100 Gb/s.",
+    "key_points": [
+      "The $D$-band offers high aggregate bandwidths, low atmospheric absorption, and multi-GHz operation",
+      "It has the potential to foster efficient, highly integrated wireless-communication systems with data rates approaching 100 Gb/s",
+      "The article reviews hardware integration against an extensive literature review and outlines challenges and possible solutions for practical 6G wireless systems in the $D$-band"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090361"
+  },
+  {
+    "id": 32,
+    "title": "Terahertz Channel Propagation Phenomena, Measurement Techniques and Modeling for 6G Wireless Communication Applications: A Survey, Open Challenges and Future Research Directions",
+    "authors": "D. Serghiou, M. Khalily, T. Brown, R. Tafazolli",
+    "publish_date": "2022-01-12",
+    "link": "https://www.semanticscholar.org/paper/1f49bfd88f1209ddda0bd345fbf7735706305c3c",
+    "summary": "{\"summary\": \"The Terahertz (THz) band is being considered as a potential candidate for 6G wireless networks due to its ability to meet high data rate and capacity requirements. However, understanding the propagation channel at THz frequencies is still in its infancy, with most research focused on fixed PtP scenarios up to 300 GHz. As the technology matures, it's expected to enable new use cases and applications, as well as improve spectral efficiencies and Quality-of-Service (QoS) for end users.\", \"key_points\": [\"THz band considered for 6G due to high data rate and capacity potential\", \"Channel modeling at THz frequencies still in its infancy\", \"Maturity of technology expected to enable new use cases and applications\"]}\n\nNote: The provided text is not a full article, but rather an introduction or abstract. Therefore, the summary and key points are based on this limited information.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-25T16:42:03.090363"
+  },
+  {
+    "id": 33,
+    "title": "Air Quality and Greenhouse Gas Emissions Assessment of Data Centers in\n  Texas: Quantifying Impacts and Environmental Tradeoffs",
+    "authors": "Ebrahim Eslami",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21312v1",
+    "summary": "I apologize, but the provided text does not appear to be related to 6G technology. The article discusses air quality and greenhouse gas emissions from data centers in Texas, which is a topic relevant to energy efficiency and sustainability.\n\nSince there are no technical insights about 6G technology, I will provide a brief summary based on available information:\n\n{\"summary\": \"This study assesses air quality and greenhouse gas emissions from data centers in Texas.\", \"key_points\": []}\n\nPlease note that there are no key points to list as the article does not discuss 6G technology. If you would like me to summarize another text related to 6G, please provide it!",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T04:58:27.388286"
+  },
+  {
+    "id": 34,
+    "title": "Vision-Intelligence-Enabled Beam Tracking for Cross-Interface Water-Air\n  Optical Wireless Communications",
+    "authors": "Tianqi Mao, Jiayue Liu, Weijie Liu, Dezhi Zheng, Zhaocheng Wang",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21290v1",
+    "summary": "This article explores the challenges and potential solutions for underwater wireless communication using optical wireless communication (OWC) technology. The development of oceanic applications like underwater surveillance and mineral exploration requires real-time wireless backhaul of observation data, which can be achieved through OWC. However, implementing water-air OWC is challenging due to the fluctuating interface between the sea surface and air, causing beam misalignment issues.",
+    "key_points": [
+      "Establishment of a mathematical channel model for water-air optical wireless transmission across the fluctuating sea surface",
+      "Challenges in implementing water-air OWC due to dynamic changes in refracted signal direction",
+      "Need for real-time transceiver alignment adaptable to oceanic environment"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T04:58:27.388305"
+  },
+  {
+    "id": 35,
+    "title": "Data-Centric Elastic Pipeline Parallelism for Efficient Long-Context LLM\n  Training",
+    "authors": "Shiju Wang, Yujie Wang, Ao Sun, Fangcheng Fu, Zijian Zhu, Bin Cui, Xu Han, Kaisheng Ma",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21275v1",
+    "summary": "Here is a summary of the article in 2 concise paragraphs:\n\nThe article discusses the importance of long context training for Large Language Models (LLMs) and the challenges associated with existing parallelism schemes. Pipeline parallelism (PP) is proposed as a solution, but its effectiveness depends on the granularity of partitioning, which can lead to trade-offs between memory consumption and hardware utilization.\n\nTo address these issues, the authors propose Elastic Pipeline Parallelism (EPP), which adaptively selects PP granularity based on resource and workload characteristics. EPP also takes into account the sequence length distribution of real-world datasets, which exhibits skewness, posing a challenge for traditional static scheduling methods.\n\nHere are the key points in JSON format:\n{\n\"summary\": \"The article discusses the challenges of long context training for Large Language Models (LLMs) and proposes Elastic Pipeline Parallelism (EPP) as a solution.\",\n\"key_points\": [\n\"Pipelining parallelism is proposed to reduce communication overhead\",\n\"Elastic Pipeline Parallelism (EPP) adaptively selects granularity based on resource and workload characteristics\",\n\"Traditional static scheduling methods overlook sequence length variance, leading to suboptimal performance\"\n]\n}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T04:58:27.388307"
+  },
+  {
+    "id": 36,
+    "title": "MMR1: Enhancing Multimodal Reasoning with Variance-Aware Sampling and\n  Open Resources",
+    "authors": "Sicong Leng, Jing Wang, Jiaxi Li, Hao Zhang, Zhiqiang Hu, Boqiang Zhang, Yuming Jiang, Hang Zhang, Xin Li, Lidong Bing, Deli Zhao, Wei Lu, Yu Rong, Aixin Sun, Shijian Lu",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21268v1",
+    "summary": "{\"summary\": \"This article focuses on addressing limitations in large multimodal reasoning models, specifically the lack of open, high-quality long chain-of-thought (CoT) data and instability of reinforcement learning (RL) algorithms. The authors propose Variance-Aware Sampling (VAS), a data selection strategy to promote reward variance and stabilize policy optimization.\", \"key_points\": [\"Variance-Aware Sampling (VAS) is proposed as a data selection strategy\", \"Large-scale, curated resources are released for long CoT cold-start data and RL QA pairs\", \"The authors aim to address limitations in large multimodal reasoning models\"]}\n\nNote: This article does not appear to be directly related to 6G technology. The topic seems to be more focused on AI and machine learning. If you would like me to summarize another article, please provide the text!",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T04:58:27.388308"
+  },
+  {
+    "id": 37,
+    "title": "Semantic Edge-Cloud Communication for Real-Time Urban Traffic\n  Surveillance with ViT and LLMs over Mobile Networks",
+    "authors": "Murat Arda Onsu, Poonam Lohan, Burak Kantarci, Aisha Syed, Matthew Andrews, Sean Kennedy",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21259v1",
+    "summary": "The article discusses the challenges of integrating edge cameras with intelligent models for real-time urban traffic surveillance in smart cities. The current approach of deploying Large Language Models (LLMs) on cloud servers due to high computational demands is hindered by limited bandwidth, leading to potential delays. To address this challenge, a semantic communication framework is proposed to reduce transmission overhead.",
+    "key_points": [
+      "Proposes a semantic communication framework for real-time urban traffic surveillance",
+      "Edge cameras are deployed across urban environments for monitoring road conditions",
+      "LLMs are currently deployed on cloud servers due to high computational demands",
+      "Limited bandwidth hinders visual data transmission from edge to cloud, compromising real-time performance"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T04:58:27.388310"
+  }
+]

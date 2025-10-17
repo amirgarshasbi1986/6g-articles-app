@@ -1,0 +1,126 @@
+from flask import Flask, render_template, request, send_from_directory, abort
+from datetime import datetime
+import json
+import os
+import glob
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__, template_folder='templates', static_folder='static')
+
+@app.route('/')
+def dashboard():
+    # Load videos from main JSON
+    videos = []
+    videos_file = 'videos/main/videos.json'
+    if os.path.exists(videos_file):
+        with open(videos_file, 'r') as f:
+            videos = json.load(f)
+
+    # Load podcasts from main JSON
+    podcasts = []
+    podcasts_file = 'podcasts/main/podcasts.json'
+    if os.path.exists(podcasts_file):
+        with open(podcasts_file, 'r') as f:
+            podcasts = json.load(f)
+
+    # Load current week's articles
+    week = request.args.get('week', get_current_week())
+    json_file = f"backend/articles_week_{week}.json"
+    articles = []
+    if os.path.exists(json_file):
+        with open(json_file, 'r') as f:
+            articles = json.load(f)
+            articles = sorted(articles, key=lambda x: x.get('created_at', ''), reverse=True)[:4]  # 4 articles for grid
+    logger.info(f"Loaded {len(articles)} articles for week {week}")
+
+    return render_template('dashboard.html', videos=videos, podcasts=podcasts, articles=articles, selected_week=week)
+
+@app.route('/videos')
+def videos():
+    week = request.args.get('week', get_latest_week())
+    videos_file = f"videos/{week}/videos.json"
+    videos = []
+    if os.path.exists(videos_file):
+        with open(videos_file, 'r') as f:
+            videos = json.load(f)
+    # Fallback to main
+    if not videos:
+        videos_file = 'videos/main/videos.json'
+        if os.path.exists(videos_file):
+            with open(videos_file, 'r') as f:
+                videos = json.load(f)
+    logger.info(f"Loaded {len(videos)} videos for week {week}")
+    weeks = get_weeks_from_folder('videos')  # New function below
+    weeks.sort(reverse=True)
+    return render_template('videos.html', videos=videos, selected_week=week, weeks=weeks)
+
+@app.route('/podcasts')
+def podcasts():
+    week = request.args.get('week', get_latest_week())
+    podcasts_file = f"podcasts/{week}/podcasts.json"
+    podcasts = []
+    if os.path.exists(podcasts_file):
+        with open(podcasts_file, 'r') as f:
+            podcasts = json.load(f)
+    # Fallback to main
+    if not podcasts:
+        podcasts_file = 'podcasts/main/podcasts.json'
+        if os.path.exists(podcasts_file):
+            with open(podcasts_file, 'r') as f:
+                podcasts = json.load(f)
+    logger.info(f"Loaded {len(podcasts)} podcasts for week {week}")
+    weeks = get_weeks_from_folder('podcasts')  # New function below
+    weeks.sort(reverse=True)
+    return render_template('podcasts.html', podcasts=podcasts, selected_week=week, weeks=weeks)
+
+def get_weeks_from_folder(folder):
+    weeks = []
+    for dir_name in os.listdir(folder):
+        if dir_name.startswith('20') and '-' in dir_name:  # e.g., '2025-40'
+            weeks.append(dir_name)
+    return weeks
+
+@app.route('/articles')
+def articles():
+    week = request.args.get('week', get_latest_week())
+    json_file = f"articles/articles_week_{week}.json"
+    articles = []
+    if os.path.exists(json_file):
+        with open(json_file, 'r') as f:
+            articles = json.load(f)
+            articles = sorted(articles, key=lambda x: x.get('created_at', ''), reverse=True)  # All articles, sorted
+    logger.info(f"Loaded {len(articles)} articles for week {week}")
+    weeks = [file.split('articles_week_')[-1].replace('.json', '') for file in glob.glob('backend/articles_week_*.json')]
+    weeks.sort(reverse=True)
+    return render_template('articles.html', articles=articles, selected_week=week, weeks=weeks)
+
+@app.route('/videos/<path:filename>')
+def serve_video(filename):
+    try:
+        return send_from_directory('videos', filename, mimetype='video/mp4')
+    except FileNotFoundError:
+        abort(404)
+
+@app.route('/podcasts/<path:filename>')
+def serve_podcast(filename):
+    try:
+        return send_from_directory('podcasts', filename, mimetype='audio/mpeg')
+    except FileNotFoundError:
+        abort(404)
+
+def get_current_week():
+    year, week, _ = datetime.now().isocalendar()
+    return f"{year}-{week:02d}"
+
+def get_latest_week():
+    weeks = [file.split('articles_week_')[-1].replace('.json', '') for file in glob.glob('backend/articles_week_*.json')]
+    if weeks:
+        weeks.sort(reverse=True)
+        return weeks[0]  # Latest week
+    return get_current_week()  # Fallback to current if no JSON
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3000, debug=True)

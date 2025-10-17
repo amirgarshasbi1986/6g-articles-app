@@ -1,0 +1,348 @@
+from flask import Flask, render_template, request, send_from_directory, send_file, abort, make_response, redirect, url_for
+from datetime import datetime
+import json
+import os
+import glob
+import logging
+
+# Configure logging with more detail
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
+logger = logging.getLogger(__name__)
+
+# Set BASE_DIR explicitly to your project root
+BASE_DIR = '/home/6g-articles-app'
+
+# Verify BASE_DIR exists at startup
+if not os.path.exists(BASE_DIR):
+    logger.error(f"BASE_DIR does not exist: {BASE_DIR}")
+    raise RuntimeError(f"BASE_DIR {BASE_DIR} not found")
+
+logger.debug(f"BASE_DIR set to: {BASE_DIR}")
+
+app = Flask(__name__, template_folder=os.path.join(BASE_DIR, 'templates'), static_folder=os.path.join(BASE_DIR, 'static'))
+
+@app.route('/')
+def dashboard():
+    logger.debug("Entering dashboard route")
+    # Load videos from main JSON
+    videos = []
+    videos_file = os.path.join(BASE_DIR, 'videos/main/videos.json')
+    logger.debug(f"Checking videos file: {videos_file}")
+    if os.path.exists(videos_file):
+        logger.info(f"Found videos file: {videos_file}")
+        try:
+            with open(videos_file, 'r') as f:
+                videos = json.load(f)
+                logger.debug(f"Loaded {len(videos)} videos: {videos}")
+        except Exception as e:
+            logger.error(f"Error loading videos JSON: {e}")
+    else:
+        logger.warning(f"Videos file not found: {videos_file}")
+
+    # Load podcasts from main JSON
+    podcasts = []
+    podcasts_file = os.path.join(BASE_DIR, 'podcasts/main/podcasts.json')
+    logger.debug(f"Checking podcasts file: {podcasts_file}")
+    if os.path.exists(podcasts_file):
+        logger.info(f"Found podcasts file: {podcasts_file}")
+        try:
+            with open(podcasts_file, 'r') as f:
+                podcasts = json.load(f)
+                logger.debug(f"Loaded {len(podcasts)} podcasts: {podcasts}")
+        except Exception as e:
+            logger.error(f"Error loading podcasts JSON: {e}")
+    else:
+        logger.warning(f"Podcasts file not found: {podcasts_file}")
+
+    # Load current week's articles
+    week = request.args.get('week', get_current_week())
+    json_file = os.path.join(BASE_DIR, f"backend/articles_week_{week}.json")
+    articles = []
+    logger.debug(f"Checking articles file: {json_file}")
+    if os.path.exists(json_file):
+        logger.info(f"Found articles file: {json_file}")
+        try:
+            with open(json_file, 'r') as f:
+                articles = json.load(f)
+                articles = sorted(articles, key=lambda x: x.get('created_at', ''), reverse=True)[:4]
+                logger.debug(f"Loaded {len(articles)} articles for week {week}")
+        except Exception as e:
+            logger.error(f"Error loading articles JSON: {e}")
+    else:
+        logger.warning(f"Articles file not found: {json_file}")
+
+    logger.info(f"Rendering dashboard with {len(videos)} videos, {len(podcasts)} podcasts, {len(articles)} articles")
+    return render_template('dashboard.html', videos=videos, podcasts=podcasts, articles=articles, selected_week=week, video_week='main', podcast_week='main')
+
+@app.route('/videos')
+def videos():
+    logger.debug("Entering videos route")
+    week = request.args.get('week', get_latest_week('videos'))
+    videos_file = os.path.join(BASE_DIR, f"videos/{week}/videos.json")
+    media_week = week
+    videos = []
+    logger.debug(f"Checking videos file: {videos_file}")
+    if os.path.exists(videos_file):
+        logger.info(f"Found videos file: {videos_file}")
+        try:
+            with open(videos_file, 'r') as f:
+                videos = json.load(f)
+                logger.debug(f"Loaded {len(videos)} videos for week {week}")
+        except Exception as e:
+            logger.error(f"Error loading videos JSON: {e}")
+    else:
+        logger.warning(f"Videos file not found, falling back to main: {videos_file}")
+        media_week = 'main'
+        videos_file = os.path.join(BASE_DIR, 'videos/main/videos.json')
+        logger.debug(f"Checking fallback videos file: {videos_file}")
+        if os.path.exists(videos_file):
+            try:
+                with open(videos_file, 'r') as f:
+                    videos = json.load(f)
+                    logger.debug(f"Loaded {len(videos)} videos from main")
+            except Exception as e:
+                logger.error(f"Error loading fallback videos JSON: {e}")
+        else:
+            logger.warning(f"Fallback videos file not found: {videos_file}")
+
+    weeks = get_weeks_from_folder('videos')
+    weeks.sort(reverse=True)
+    logger.info(f"Rendering videos page with {len(videos)} videos for week {week}, available weeks: {weeks}")
+    return render_template('videos.html', videos=videos, selected_week=week, weeks=weeks, media_week=media_week)
+
+@app.route('/videos/<week>/')
+def videos_week_redirect(week):
+    logger.debug(f"Redirecting trailing slash for /videos/{week}/ to videos route")
+    return redirect(url_for('videos', week=week))
+
+@app.route('/podcasts')
+def podcasts():
+    logger.debug("Entering podcasts route")
+    week = request.args.get('week', get_latest_week('podcasts'))
+    podcasts_file = os.path.join(BASE_DIR, f"podcasts/{week}/podcasts.json")
+    media_week = week
+    podcasts = []
+    logger.debug(f"Checking podcasts file: {podcasts_file}")
+    if os.path.exists(podcasts_file):
+        logger.info(f"Found podcasts file: {podcasts_file}")
+        try:
+            with open(podcasts_file, 'r') as f:
+                podcasts = json.load(f)
+                logger.debug(f"Loaded {len(podcasts)} podcasts for week {week}")
+        except Exception as e:
+            logger.error(f"Error loading podcasts JSON: {e}")
+    else:
+        logger.warning(f"Podcasts file not found, falling back to main: {podcasts_file}")
+        media_week = 'main'
+        podcasts_file = os.path.join(BASE_DIR, 'podcasts/main/podcasts.json')
+        logger.debug(f"Checking fallback podcasts file: {podcasts_file}")
+        if os.path.exists(podcasts_file):
+            try:
+                with open(podcasts_file, 'r') as f:
+                    podcasts = json.load(f)
+                    logger.debug(f"Loaded {len(podcasts)} podcasts from main")
+            except Exception as e:
+                logger.error(f"Error loading fallback podcasts JSON: {e}")
+        else:
+            logger.warning(f"Fallback podcasts file not found: {podcasts_file}")
+
+    weeks = get_weeks_from_folder('podcasts')
+    weeks.sort(reverse=True)
+    logger.info(f"Rendering podcasts page with {len(podcasts)} podcasts for week {week}, available weeks: {weeks}")
+    return render_template('podcasts.html', podcasts=podcasts, selected_week=week, weeks=weeks, media_week=media_week)
+
+@app.route('/podcasts/<week>/')
+def podcasts_week_redirect(week):
+    logger.debug(f"Redirecting trailing slash for /podcasts/{week}/ to podcasts route")
+    return redirect(url_for('podcasts', week=week))
+
+@app.route('/articles')
+def articles():
+    logger.debug("Entering articles route")
+    week = request.args.get('week', get_latest_week('backend'))
+    search_term = request.args.get('search', '').lower()
+    json_file = os.path.join(BASE_DIR, f"backend/articles_week_{week}.json")
+    articles = []
+    logger.debug(f"Checking articles file: {json_file}")
+    if os.path.exists(json_file):
+        logger.info(f"Found articles file: {json_file}")
+        try:
+            with open(json_file, 'r') as f:
+                articles = json.load(f)
+                articles = sorted(articles, key=lambda x: x.get('created_at', ''), reverse=True)
+                if search_term:
+                    articles = [a for a in articles if search_term in a.get('title', '').lower() or search_term in a.get('authors', '').lower()]
+                logger.debug(f"Loaded {len(articles)} articles for week {week}, search: {search_term}")
+        except Exception as e:
+            logger.error(f"Error loading articles JSON: {e}")
+    else:
+        logger.warning(f"Articles file not found: {json_file}")
+
+    weeks = [file.split('articles_week_')[-1].replace('.json', '') for file in glob.glob(os.path.join(BASE_DIR, 'backend/articles_week_*.json'))]
+    weeks.sort(reverse=True)
+    logger.info(f"Rendering articles page with {len(articles)} articles for week {week}, available weeks: {weeks}")
+    return render_template('articles.html', articles=articles, selected_week=week, weeks=weeks, search_term=search_term)
+
+@app.route('/about')
+def about():
+    logger.debug("Entering about route")
+    return render_template('about.html')
+
+# File serving routes (placed before detail routes to ensure priority)
+@app.route('/videos/<week>/<path:filename>')
+def serve_video_file(week, filename):
+    directory = os.path.join(BASE_DIR, 'videos', week)
+    full_path = os.path.join(directory, filename)
+    logger.debug(f"Requested video file: {full_path} for URL /videos/{week}/{filename}")
+    if not os.path.exists(directory):
+        logger.error(f"Directory not found: {directory}")
+        abort(404)
+    if not os.path.exists(full_path):
+        logger.error(f"File not found: {full_path}")
+        abort(404)
+    logger.info(f"Serving file: {full_path}")
+    if filename.endswith('.mp4'):
+        return send_from_directory(directory, filename, mimetype='video/mp4')
+    elif filename.endswith('.pdf'):
+        return send_from_directory(directory, filename, mimetype='application/pdf')
+    return send_from_directory(directory, filename)
+
+@app.route('/podcasts/<week>/<path:filename>')
+def serve_podcast_file(week, filename):
+    directory = os.path.join(BASE_DIR, 'podcasts', week)
+    full_path = os.path.join(directory, filename)
+    logger.debug(f"Requested podcast file: {full_path} for URL /podcasts/{week}/{filename}")
+    if not os.path.exists(directory):
+        logger.error(f"Directory not found: {directory}")
+        abort(404)
+    if not os.path.exists(full_path):
+        logger.error(f"File not found: {full_path}")
+        abort(404)
+    logger.info(f"Serving file: {full_path}")
+    if filename.endswith('.mp3'):
+        return send_from_directory(directory, filename, mimetype='audio/mpeg')
+    elif filename.endswith('.pdf'):
+        return send_from_directory(directory, filename, mimetype='application/pdf')
+    return send_from_directory(directory, filename)
+
+@app.route('/videos/<week>/<video_id>')
+def video_detail(week, video_id):
+    logger.debug(f"Entering video_detail route for week: {week}, video_id: {video_id}")
+    # Check if video_id looks like a file (e.g., ends with .mp4, .pdf)
+    if video_id.endswith(('.mp4', '.pdf')):
+        logger.debug(f"Calling serve_video_file directly for: {video_id}")
+        return serve_video_file(week, video_id)
+    
+    videos_file = os.path.join(BASE_DIR, f"videos/{week}/videos.json")
+    media_week = week
+    videos = []
+    logger.debug(f"Checking videos file: {videos_file}")
+    if os.path.exists(videos_file):
+        logger.info(f"Found videos file: {videos_file}")
+        try:
+            with open(videos_file, 'r') as f:
+                videos = json.load(f)
+                logger.debug(f"Loaded {len(videos)} videos")
+        except Exception as e:
+            logger.error(f"Error loading videos JSON: {e}")
+    else:
+        logger.warning(f"Videos file not found, falling back to main: {videos_file}")
+        media_week = 'main'
+        videos_file = os.path.join(BASE_DIR, 'videos/main/videos.json')
+        logger.debug(f"Checking fallback videos file: {videos_file}")
+        if os.path.exists(videos_file):
+            try:
+                with open(videos_file, 'r') as f:
+                    videos = json.load(f)
+                    logger.debug(f"Loaded {len(videos)} videos from main")
+            except Exception as e:
+                logger.error(f"Error loading fallback videos JSON: {e}")
+        else:
+            logger.warning(f"Fallback videos file not found: {videos_file}")
+
+    video = next((v for v in videos if v['id'] == video_id), None)
+    if not video:
+        logger.error(f"Video not found for id: {video_id}")
+        abort(404)
+    other_videos = [v for v in videos if v['id'] != video_id]
+    logger.info(f"Rendering video_detail for video: {video['title']}, media_week: {media_week}")
+    return render_template('video_detail.html', video=video, selected_week=week, other_videos=other_videos, media_week=media_week)
+
+@app.route('/podcasts/<week>/<podcast_id>')
+def podcast_detail(week, podcast_id):
+    logger.debug(f"Entering podcast_detail route for week: {week}, podcast_id: {podcast_id}")
+    # Check if podcast_id looks like a file (e.g., ends with .mp3, .pdf)
+    if podcast_id.endswith(('.mp3', '.pdf')):
+        logger.debug(f"Calling serve_podcast_file directly for: {podcast_id}")
+        return serve_podcast_file(week, podcast_id)
+    
+    podcasts_file = os.path.join(BASE_DIR, f"podcasts/{week}/podcasts.json")
+    media_week = week
+    podcasts = []
+    logger.debug(f"Checking podcasts file: {podcasts_file}")
+    if os.path.exists(podcasts_file):
+        logger.info(f"Found podcasts file: {podcasts_file}")
+        try:
+            with open(podcasts_file, 'r') as f:
+                podcasts = json.load(f)
+                logger.debug(f"Loaded {len(podcasts)} podcasts")
+        except Exception as e:
+            logger.error(f"Error loading podcasts JSON: {e}")
+    else:
+        logger.warning(f"Podcasts file not found, falling back to main: {podcasts_file}")
+        media_week = 'main'
+        podcasts_file = os.path.join(BASE_DIR, 'podcasts/main/podcasts.json')
+        logger.debug(f"Checking fallback podcasts file: {podcasts_file}")
+        if os.path.exists(podcasts_file):
+            try:
+                with open(podcasts_file, 'r') as f:
+                    podcasts = json.load(f)
+                    logger.debug(f"Loaded {len(podcasts)} podcasts from main")
+            except Exception as e:
+                logger.error(f"Error loading fallback podcasts JSON: {e}")
+        else:
+            logger.warning(f"Fallback podcasts file not found: {podcasts_file}")
+
+    podcast = next((p for p in podcasts if p['id'] == podcast_id), None)
+    if not podcast:
+        logger.error(f"Podcast not found for id: {podcast_id}")
+        abort(404)
+    other_podcasts = [p for p in podcasts if p['id'] != podcast_id]
+    logger.info(f"Rendering podcast_detail for podcast: {podcast['title']}, media_week: {media_week}")
+    return render_template('podcast_detail.html', podcast=podcast, selected_week=week, other_podcasts=other_podcasts, media_week=media_week)
+
+def get_latest_week(folder='backend'):
+    folder_path = os.path.join(BASE_DIR, folder)
+    logger.debug(f"Checking weeks in folder: {folder_path}")
+    if folder == 'backend':
+        weeks = [file.split('articles_week_')[-1].replace('.json', '') for file in glob.glob(os.path.join(BASE_DIR, f'{folder}/articles_week_*.json'))]
+    else:
+        weeks = get_weeks_from_folder(folder)
+    logger.debug(f"Found weeks: {weeks}")
+    if weeks:
+        weeks.sort(reverse=True)
+        return weeks[0]
+    return get_current_week()
+
+def get_weeks_from_folder(folder):
+    weeks = []
+    folder_path = os.path.join(BASE_DIR, folder)
+    logger.debug(f"Scanning folder for weeks: {folder_path}")
+    if os.path.exists(folder_path):
+        for dir_name in os.listdir(folder_path):
+            if dir_name.startswith('20') and '-' in dir_name:
+                weeks.append(dir_name)
+        logger.debug(f"Found weeks in {folder}: {weeks}")
+    else:
+        logger.error(f"Folder not found: {folder_path}")
+    return weeks
+
+def get_current_week():
+    year, week, _ = datetime.now().isocalendar()
+    current_week = f"{year}-{week:02d}"
+    logger.debug(f"Current week calculated: {current_week}")
+    return current_week
+
+if __name__ == '__main__':
+    logger.info(f"Starting Flask app with BASE_DIR: {BASE_DIR}")
+    app.run(host='0.0.0.0', port=3000, debug=True) 

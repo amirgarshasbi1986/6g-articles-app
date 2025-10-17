@@ -1,0 +1,164 @@
+[
+  {
+    "id": 73,
+    "title": "Joint Jammer Mitigation and Data Detection",
+    "authors": "Gian Marti, Christoph Studer",
+    "publish_date": "2025-10-02",
+    "link": "http://arxiv.org/abs/2510.02021v1",
+    "summary": "Joint jammer Mitigation and data Detection (JMD) is a novel MIMO jammer mitigation approach that estimates and removes interference subspace jointly with detecting legitimate transmit data. It addresses drawbacks of existing methods, such as train...",
+    "key_points": [
+      "Eliminates dedicated training phase",
+      "Mitigates smart and dynamic multi-antenna jammers",
+      "Provides two JMD-type algorithms: SANDMAN and MAED",
+      "Demonstrated efficacy through extensive simulations"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:36:02.925575"
+  },
+  {
+    "id": 72,
+    "title": "Interplay between Security, Privacy and Trust in 6G-enabled Intelligent\n  Transportation Systems",
+    "authors": "Ahmed Danladi Abdullahi, Erfan Bahrami, Tooska Dargahi, Mohammed Al-Khalidi, Mohammad Hammoudeh",
+    "publish_date": "2025-10-02",
+    "link": "http://arxiv.org/abs/2510.02487v1",
+    "summary": "This paper examines the security and privacy challenges of 6G-ITS, highlighting the need for a comprehensive security framework to address emerging threats. It discusses potential benefits of 6G technology in transportation, including improved com...",
+    "key_points": [
+      "Security and privacy challenges in 6G-ITS",
+      "Comprehensive security framework needed",
+      "Potential benefits of 6G technology in transportation",
+      "Quantum technologies' role in enhancing security and introducing vulnerabilities"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:34:33.371621"
+  },
+  {
+    "id": 71,
+    "title": "Pioneering Scalable Prototyping for Mid-Band XL-MIMO Systems: Design and\n  Implementation",
+    "authors": "Jiachen Tian, Yu Han, Zhengtao Jin, Xi Yang, Jie Yang, Wankai Tang, Xiao Li, Wenjin Wang, Shi Jin",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.02793v1",
+    "summary": "This article discusses the mid-band frequency range as a key enabler for future communication systems, highlighting its potential to enhance throughput and support advanced functionalities. A real-time prototype system is designed and implemented,...",
+    "key_points": [
+      "Mid-band XL-MIMO system design",
+      "Real-time prototype implementation",
+      "Supports multiuser communication with up to 12 users"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:32:53.480232"
+  },
+  {
+    "id": 70,
+    "title": "Action Deviation-Aware Inference for Low-Latency Wireless Robots",
+    "authors": "Jeyoung Park, Yeonsub Lim, Seungeun Oh, Jihong Park, Jinho Choi, Seong-Lyun Kim",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.02851v1",
+    "summary": "Proposed method reduces latency and transmission in distributed ML for AI applications like autonomous driving and robot manipulation by selectively skipping server operations based on action deviation.",
+    "key_points": [
+      "Selective skipping improves uplink transmission and server operation",
+      "Action deviation-aware hybrid inference reduces latency by 33.32% and transmission by 40%",
+      "Improves task success rate to 97.03% compared to target model only inference",
+      "Reduces computational load on remote servers"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:31:12.908457"
+  },
+  {
+    "id": 69,
+    "title": "Compressed Multiband Sensing in FR3 Using Alternating Direction Method\n  of Multipliers",
+    "authors": "Dexin Wang, Isha Jariwala, Ahmad Bazzi, Sundeep Rangan, Theodore S. Rappaport, Marwa Chafii",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03055v1",
+    "summary": "A novel framework for multiband sensing in 6G ISAC using ADMM-CMS is introduced, achieving higher spatial resolution and improved denoising compared to classical beamforming methods.                  ",
+    "key_points": [
+      "ADMM-CMS improves spatial resolution by 34 dB",
+      "Achieves 0.9 successful recovery probability with reduced delay errors",
+      "Outperforms separate compressed sensing on sub-bands in FR3",
+      "Suitable for large-scale structured optimization using ADMM algorithm"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:29:33.741954"
+  },
+  {
+    "id": 68,
+    "title": "When Names Disappear: Revealing What LLMs Actually Understand About Code",
+    "authors": "Cuong Chi Le, Minh V. T. Pham, Cuong Duc Van, Hoang N. Phan, Huy N. Phan, Tien N. Nguyen",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03178v1",
+    "summary": "LLMs' code understanding relies on both structural semantics and human-interpretable naming. Removing naming cues degrades performance, revealing memorization shortcuts. A new benchmark reduces inflated performance gaps and assesses LLMs' genuine ...",
+    "key_points": [
+      "LLMs rely on both structural semantics and naming for code understanding",
+      "Removing naming cues degrades performance and reveals memorization shortcuts",
+      "New benchmark (ClassEval-Obf) systematically suppresses naming cues while preserving behavior",
+      "ClassEval-Obf reduces inflated performance gaps and assesses genuine semantic reasoning"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:27:51.238967"
+  },
+  {
+    "id": 67,
+    "title": "Cache-to-Cache: Direct Semantic Communication Between Large Language\n  Models",
+    "authors": "Tianyu Fu, Zihan Min, Hanling Zhang, Jichao Yan, Guohao Dai, Wanli Ouyang, Yu Wang",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03215v1",
+    "summary": "This article introduces Cache-to-Cache (C2C), a new paradigm for direct semantic communication between Large Language Models (LLMs). C2C improves response quality without increasing cache size, utilizing deep semantics from both models.",
+    "key_points": [
+      "Direct semantic transfer between LLMs",
+      "Improved response quality",
+      "Faster latency with 2.0x speedup",
+      "Higher accuracy than individual models",
+      "Avoiding explicit text generation"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:26:09.464249"
+  },
+  {
+    "id": 66,
+    "title": "Cheat-Penalised Quantum Weak Coin-Flipping",
+    "authors": "Atul Singh Arora, Carl A. Miller, Mauro E. S. Morales, Jamie Sikora",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03218v1",
+    "summary": "Researchers develop efficient quantum protocols for cheat-penalised weak coin-flipping, achieving near-perfect security with low round and space complexity.                                            ",
+    "key_points": [
+      "New protocols outperform existing weak coin-flipping protocols in terms of security",
+      "Proocols achieve high security with minimal cheating penalty (0.01)",
+      "Optimization between bias reduction and round reduction possible with varying penalties",
+      "Technical contributions include extending point game-protocol correspondence and numerical algorithm for constructing approximate point games",
+      "Results enable secure quantum protocols for multiparty computation"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:24:34.307043"
+  },
+  {
+    "id": 65,
+    "title": "TPM-Based Continuous Remote Attestation and Integrity Verification for\n  5G VNFs on Kubernetes",
+    "authors": "Al Nahian Bin Emran, Rajendra Upadhyay, Rajendra Paudyal, Lisa Donnan, Duminda Wijesekera",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03219v1",
+    "summary": "A TPM 2.0-based continuous remote attestation solution is presented for securing core 5G components deployed on Kubernetes, addressing security challenges and aligning with Zero Trust principles.     ",
+    "key_points": [
+      "Lack of runtime integrity validation in current 5G security specifications",
+      "Introduction of a TPM 2.0-based continuous remote attestation solution using Linux Integrity Measurement Architecture (IMA) and Trusted Platform Module (TPM)",
+      "Per-pod integrity verification using an open-source Keylime framework",
+      "Real-time detection of unauthorized modifications and generation of detailed audit logs",
+      "Enhancing the resilience of 5G as critical infrastructure in multi-vendor and mission-critical scenarios"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:22:23.147392"
+  },
+  {
+    "id": 64,
+    "title": "Absence of quantum Darwinism as a resource in secure quantum\n  communication and computation",
+    "authors": "Bishal Kumar Das, Sourav Manna, Vaibhav Madhok",
+    "publish_date": "2025-10-03",
+    "link": "http://arxiv.org/abs/2510.03225v1",
+    "summary": "This article discusses the emergence of classical world from quantum mechanics, highlighting the role of objectivity (quantum Darwinism) in cryptography and efficient classical simulation of quantum circuits. It provides a key ingredient for effic...",
+    "key_points": [
+      "Quantum Darwinism enables efficient classical simulation",
+      "Concordant states provide a cryptographic advantage",
+      "Objectivity demarcates the quantum-classical border",
+      "Efficient simulation aligns with Hardy's boundary"
+    ],
+    "week": "2025-41",
+    "created_at": "2025-10-06T04:20:06.037440"
+  }
+]

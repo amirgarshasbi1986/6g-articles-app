@@ -1,0 +1,161 @@
+[
+  {
+    "id": 61,
+    "title": "Knowledge Defined Networking for 6G: A Reinforcement Learning Example\n  for Resource Management",
+    "authors": "Erol Ko\u00e7o\u011flu, Mehmet Ozdem, Tu\u011f\u00e7e Bilen",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26075v1",
+    "summary": "The article discusses the need for AI-powered network designs to handle 6G's demands, proposing Knowledge-Defined Networking (KDN) as a solution. KDN aims to optimize resource management using Reinforcement Learning.",
+    "key_points": [
+      "AI-powered network design",
+      "Knowledge-Defined Networking (KDN)",
+      "Reinforcement Learning for resource management"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:50:33.781264"
+  },
+  {
+    "id": 60,
+    "title": "Toward an Unbiased Collective Memory for Efficient LLM-Based Agentic 6G\n  Cross-Domain Management",
+    "authors": "Hatim Chergui, Miguel Catalan Cid, Pouria Sayyad Khodashenas, Daniel Camps Mur, Christos Verikoukis",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26200v1",
+    "summary": "A novel framework for proactive cross-domain resource orchestration in 6G RAN-Edge networks using LLM-augmented agents is introduced, featuring an unbiased memory design to mitigate cognitive biases. ",
+    "key_points": [
+      "Agents use advanced reasoning and planning capabilities",
+      "Unbiased memory design minimizes confirmation, availability, primacy, and recency biases",
+      "Memory design enables learning from both successful and failed strategies",
+      "Results show 4.5x reduction in unresolved negotiations compared to non-memory baselines"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:49:29.853944"
+  },
+  {
+    "id": 59,
+    "title": "Transmitter-Side Beyond-Diagonal RIS-Enabled Integrated Sensing and\n  Communications",
+    "authors": "Kexin Chen, Yijie Mao, Wonjae Shin",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26333v1",
+    "summary": "This paper proposes a novel integrated sensing and communication framework using Beyond Diagonal Reconfigurable Intelligent Surfaces (BD-RIS) at the transmitter, aiming to enhance sensing and communication performance.",
+    "key_points": [
+      "BD-RIS improves electromagnetic wave propagation control",
+      "Jointly optimizes active beamforming and scattering matrix for sensing targets and maximizing sum rate",
+      "Proposes a low-complexity iterative algorithm for efficient solution",
+      "Offers enhanced dual-functional performance while reducing computational complexity"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:47:38.755064"
+  },
+  {
+    "id": 58,
+    "title": "Joint Communication and Parameter Estimation in MIMO Channels",
+    "authors": "G\u00f6khan Y\u0131lmaz, Franz Lampel, Hamdi Joudeh, Giuseppe Caire",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26365v1",
+    "summary": "Article studies joint communication and sensing with multiple antennas, establishing a capacity-MSE function to optimize coding schemes. It showcases optimal schemes and trade-offs in two practical scenarios.",
+    "key_points": [
+      "Joint communication and sensing setting",
+      "Capacity-MSE function",
+      "Optimal coding schemes",
+      "Practical scenario applications"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:46:13.412771"
+  },
+  {
+    "id": 57,
+    "title": "Peculiarities of spin dynamics excitation by magnetic field of a\n  high-frequency electromagnetic pulse",
+    "authors": "Nika Gribova, Anatoly Zvezdin, Vladimir Belotelov",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26528v1",
+    "summary": "Researchers developed a unified theoretical framework to study THz electromagnetic pulses on ferromagnetic materials, revealing optimal pulse durations for spin precession excitation and dependency on magnetic parameters and external fields.",
+    "key_points": [
+      "Optimal pulse duration depends on sample and field parameters",
+      "Circular polarization enhances rectified magnetic field effect",
+      "Short pulses can excite free spin precession regardless of polarization"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:45:04.694674"
+  },
+  {
+    "id": 56,
+    "title": "Neural Network-Based Single-Carrier Joint Communication and Sensing:\n  Loss Design, Constellation Shaping and Precoding",
+    "authors": "Charlotte Muth, Benedikt Geiger, Daniel Gil Gaviria, Laurent Schmalen",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26508v1",
+    "summary": "This article investigates the impact of higher-order modulation formats on single-carrier joint communication and sensing systems. It explores the performance of autoencoder-based systems with multi-snapshot sensing and varying signal-to-noise ratio.",
+    "key_points": [
+      "Neural networks outperform classical algorithms in low SNR conditions",
+      "Multi-snapshot sensing reduces gap in sensing performance between classical and shaped modulation formats",
+      "System extension to multi-user multiple-input multiple-output improves spatial efficiency",
+      "Importance of estimation bounds for training neural networks in varying SNR conditions highlighted"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:43:41.244498"
+  },
+  {
+    "id": 55,
+    "title": "Ukrainian Wartime Astronomy and its Prospects",
+    "authors": "Danilo Albergaria, Kateryna Frantseva, Pedro Russo, Svitlana Babiichuk, Oksana Berezhna, Sofiia Denyshchenko, Daria Dobrycheva, Vadym Kaydash, Olena Kompaniiets, Oleksander Konovalenko, Yurii Kulinich, Igor Lukyanyk, Vladyslava Marsakova, Bohdan Novosyadlyj, Elena Panko, Volodymyr Reshetnyk, Ivan Slyusarev, Iurii Sushch, Ganna Tolstanova, Iryna Vavilova, Liubov Yankiv-Vitkovska, Yaroslav Yatskiv, Vyacheslav Zakharenko",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26510v1",
+    "summary": "Astronomical facilities damaged by the Russian invasion of Ukraine are being restored with a focus on international community integration.                                                              ",
+    "key_points": [
+      "Facilities compromised by war",
+      "Researchers displaced",
+      "International community integration plan developed",
+      "Restoration efforts underway"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:42:03.091028"
+  },
+  {
+    "id": 54,
+    "title": "HilbertA: Hilbert Attention for Image Generation with Diffusion Models",
+    "authors": "Shaoyi Zheng, Wenbo Lu, Yuxuan Xia, Haomin Liu, Shengjie Wang",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26538v1",
+    "summary": "A new sparse attention mechanism, HilbertA, balances spatial locality with GPU efficiency by reordering image tokens and employing a sliding schedule. It achieves comparable image quality while delivering significant acceleration on high-resolutio...",
+    "key_points": [
+      "HilbertA balances 2D spatial locality with GPU efficiency",
+      "Employing a sliding schedule enables long-range information propagation",
+      "Significant acceleration achieved on high-resolution image generation",
+      "Comparable image quality to prior methods"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:41:26.614279"
+  },
+  {
+    "id": 53,
+    "title": "TASP: Topology-aware Sequence Parallelism",
+    "authors": "Yida Wang, Ke Hong, Xiuhong Li, Yuanchao Xu, Wenxun Wang, Guohao Dai, Yu Wang",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26541v1",
+    "summary": "Researchers propose TASP, a topology-aware sequence parallelism method for large language models, to overcome communication efficiency limitations of Ring Attention on modern accelerators.            ",
+    "key_points": [
+      "TASP decomposes accelerator topology into orthogonal ring datapaths",
+      "Improves communication efficiency compared to Ring Attention",
+      "Achieves up to 3.58 speedup over Zigzag-Ring Attention",
+      "Experimental results demonstrate improved performance on single-node and multi-node systems"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:40:00.745312"
+  },
+  {
+    "id": 52,
+    "title": "Secure ISAC with Fluid Antenna Systems: Joint Precoding and Port\n  Selection",
+    "authors": "Abdelhamid Salem, Hao Xu, Kai-Kit Wong, Chan-Byoung Chae, Yangyang Zhang",
+    "publish_date": "2025-09-30",
+    "link": "http://arxiv.org/abs/2509.26572v1",
+    "summary": "A novel framework enhances physical-layer security in integrated sensing and communication systems by leveraging fluid antenna system reconfigurability.                                                ",
+    "key_points": [
+      "Joint precoding and port selection strategy maximizes sum secrecy rate while ensuring reliable radar sensing",
+      "Fractional programming and successive convex approximation solve the problem iteratively",
+      "Low-complexity schemes reduce computational complexity using zero-forcing precoding and greedy port selection",
+      "Simulation results demonstrate substantial improvements in secrecy performance and sensing accuracy",
+      "FAS geometry optimization enables secure and efficient joint communication-sensing for next-generation wireless networks"
+    ],
+    "week": "2025-40",
+    "created_at": "2025-10-02T08:38:16.906563"
+  }
+]

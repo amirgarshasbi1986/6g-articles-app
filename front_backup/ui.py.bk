@@ -1,0 +1,29 @@
+from flask import Flask, render_template, request
+import json
+import os
+import logging
+from datetime import datetime, date, timedelta
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__, template_folder='./templates', static_folder='./static')
+
+@app.route('/')
+def index():
+    week = request.args.get('week', get_current_week())
+    json_file = f"articles_week_{week}.json"
+    articles = []
+    if os.path.exists(json_file):
+        with open(json_file, 'r') as f:
+            articles = json.load(f)
+    logger.info(f"Loaded {len(articles)} articles for week {week}")
+    return render_template('index.html', articles=articles[:10], week=week)
+
+def get_current_week():
+    date = datetime.now()
+    week = date.strftime('%Y-%W')
+    return week
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3000, debug=True)

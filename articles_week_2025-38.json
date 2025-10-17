@@ -1,0 +1,128 @@
+[
+  {
+    "id": 16,
+    "title": "Terahertz Channel Propagation Phenomena, Measurement Techniques and Modeling for 6G Wireless Communication Applications: A Survey, Open Challenges and Future Research Directions",
+    "authors": "D. Serghiou, M. Khalily, T. Brown, R. Tafazolli",
+    "publish_date": "2022-01-12",
+    "link": "https://www.semanticscholar.org/paper/1f49bfd88f1209ddda0bd345fbf7735706305c3c",
+    "summary": "{\"summary\": \"The Terahertz band is a potential candidate for 6G wireless networks due to its ability to satisfy high data rate and capacity requirements. However, channel modeling at THz frequencies has been limited to fixed PtP scenarios up to 300 GHz, highlighting the need for further research and adaptation of models to the distinctive characteristics of THz waves.\", \"key_points\": [\"The Terahertz band spans a great portion of the RF spectrum that is mostly unoccupied and unregulated\", \"Channel modeling at THz frequencies has been limited to fixed PtP scenarios up to 300 GHz\", \"Future wireless communication systems will enable new use cases and applications, as well as deliver higher spectral efficiencies\"]}\n\nNote: The provided text is quite short, so the summary is brief and focuses on the main technical insights.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:53:10.503709"
+  },
+  {
+    "id": 15,
+    "title": "A Review of Integrated Systems and Components for 6G Wireless Communication in the D-Band",
+    "authors": "Tim Maiwald, Teng Li, George-Roberto Hotopan, Katharina Kolb, Karina Disch, Julian Potschka, Alexander Haag, M. Dietz, B. Debaillie, T. Zwick, K. Aufinger, D. Ferling, R. Weigel, A. Visweswaran",
+    "publish_date": "2023-03-01",
+    "link": "https://www.semanticscholar.org/paper/d16028dacc8ff20da9e7001ef95dc750e7c0e4c4",
+    "summary": "This article discusses the potential of the D-band (110-170 GHz) for 6G wireless communication systems, highlighting its high aggregate bandwidths, low atmospheric absorption, and multi-GHz operation. The author reviews hardware integration aspects and outlines challenges and solutions for practical 6G systems in this band.",
+    "key_points": [
+      "D-band offers high aggregate bandwidths, low atmospheric absorption, and multi-GHz operation",
+      "Potential to foster efficient, highly integrated wireless-communication systems with data rates approaching 100 Gb/s",
+      "Article reviews hardware integration aspects and outlines challenges and solutions for practical 6G systems in the D-band"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:49:43.337920"
+  },
+  {
+    "id": 14,
+    "title": "Electromagnetic Information Theory: Fundamentals and Applications for 6G Wireless Communication Systems",
+    "authors": "Chengxiang Wang, Yue Yang, Jie Huang, Xiqi Gao, T. Cui, Lajos Hanzo",
+    "publish_date": "2024-01-17",
+    "link": "https://www.semanticscholar.org/paper/3a0f43729a07126ecdd95285c8a7ca73c9e89c58",
+    "summary": "This article highlights the need for a unified approach to antenna theory, wireless propagation channel modeling, electromagnetic theory, and information theory in sixth-generation (6G) wireless communication networks. The integration of these theories is crucial to achieve seamless coverage in three-dimensional space and enable advanced technologies like ultra-massive MIMO and holographic MIMO.",
+    "key_points": [
+      "Integration of four fundamental theories: antenna theory, wireless propagation channel modeling, electromagnetic theory, and information theory",
+      "Seamless coverage in 3D space requires CSI acquisition and channel capacity calculation anywhere and anytime",
+      "Joint modeling of antennas and wireless propagation channels is necessary for advanced technologies like ultra-massive MIMO and holographic MIMO"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:46:52.791403"
+  },
+  {
+    "id": 13,
+    "title": "6G Wireless Communication Systems: Applications, Requirements, Technologies, Challenges, and Research Directions",
+    "authors": "M. Z. Chowdhury, M. Shahjalal, Shakil Ahmed, Y. Jang",
+    "publish_date": "2019-09-25",
+    "link": "https://www.semanticscholar.org/paper/f735c6086476893c6a0faefe148a43e97caba311",
+    "summary": "This article discusses the vision for 6G wireless communication, expected to be implemented between 2027 and 2030. Key challenges include increasing system capacity, data rate, reducing latency, improving security, and enhancing quality of service (QoS) compared to 5G. The paper presents a network architecture for future 6G systems, highlighting emerging technologies such as AI, terahertz communications, and wireless optical technology.",
+    "key_points": [
+      "Artificial intelligence will play a key role in 6G",
+      "Terahertz communications and wireless optical technology are expected to be integrated into 6G networks",
+      "Challenges include increasing system capacity, data rate, reducing latency, improving security, and enhancing quality of service (QoS) compared to 5G"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:43:49.247380"
+  },
+  {
+    "id": 12,
+    "title": "Towards 6G wireless communication networks: vision, enabling technologies, and new paradigm shifts",
+    "authors": "X. You, Cheng-Xiang Wang, Jie Huang, Xiqi Gao, Zaichen Zhang, Mao Wang, Yongming Huang, Chuan Zhang, Yanxiang Jiang, Jiaheng Wang, Min Zhu, B. Sheng, Dongmin Wang, Zhiwen Pan, Pengcheng Zhu, Yang Yang, Zening Liu, Ping Zhang, Xiaofeng Tao, Shaoqian Li, Zhimin Chen, Xinying Ma, I. Chih-Lin, Shuangfeng Han, Ke Li, Chengkang Pan, Zhiming Zheng, L. Hanzo, X. Shen, Y. Guo, Z. Ding, H. Haas, W. Tong, Peiying Zhu, Ganghua Yang, Jue Wang, E. Larsson, H. Ngo, W. Hong, Haiming Wang, Debin Hou, Jixin Chen,",
+    "publish_date": "2020-11-24",
+    "link": "https://www.semanticscholar.org/paper/d5fd1dc358316904069275d3b6cbff3141e021e0",
+    "summary": "{\"summary\": \"The article discusses the limitations of 5G technology and the need for 6G wireless communication networks to meet future requirements. To achieve this, 6G networks will rely on new enabling technologies such as air interface and transmission technologies, novel network architecture, and multi-antenna technologies. The vision for 6G is that it will have four paradigm shifts.\", \"key_points\": [\"Global coverage through terrestrial and non-terrestrial communication\", \"New enabling technologies in air interface and transmission\", \"Novel network architecture including waveform design and multiple access schemes\", \"Multi-antenna technologies and cell-free architecture\"]}\n\nNote: The provided text is brief, so the summary and key points are based on available information.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:40:38.560669"
+  },
+  {
+    "id": 11,
+    "title": "Semantic Edge-Cloud Communication for Real-Time Urban Traffic\n  Surveillance with ViT and LLMs over Mobile Networks",
+    "authors": "Murat Arda Onsu, Poonam Lohan, Burak Kantarci, Aisha Syed, Matthew Andrews, Sean Kennedy",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21259v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n{\"summary\": \"This article discusses the challenges of integrating edge cameras with intelligent models for real-time urban traffic surveillance in Intelligent Transportation Systems (ITS). The authors propose a semantic communication framework to reduce transmission latency and improve performance. The framework aims to enable multimodal Large Language Models (LLMs) to operate on edge devices, enhancing real-time monitoring and user interaction.\", \"key_points\": [\"Semantic communication framework proposed for reducing transmission latency\", \"Multimodal LLMs require high computational demands, making cloud-based inference necessary\", \"Limited bandwidth hinders visual data transmission from edge to cloud, compromising real-time performance\"]}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:37:32.153348"
+  },
+  {
+    "id": 10,
+    "title": "MMR1: Enhancing Multimodal Reasoning with Variance-Aware Sampling and\n  Open Resources",
+    "authors": "Sicong Leng, Jing Wang, Jiaxi Li, Hao Zhang, Zhiqiang Hu, Boqiang Zhang, Yuming Jiang, Hang Zhang, Xin Li, Lidong Bing, Deli Zhao, Wei Lu, Yu Rong, Aixin Sun, Shijian Lu",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21268v1",
+    "summary": "This article addresses limitations in large multimodal reasoning models by proposing Variance-Aware Sampling (VAS) for stable policy optimization. VAS combines outcome variance and trajectory diversity to promote reward variance and stabilize policy optimization, addressing the issue of gradient vanishing in Group Relative Policy Optimization (GRPO). The authors also release large-scale resources containing long chain-of-thought data and reinforcement learning QA pairs, designed for quality, difficulty, and diversity.",
+    "key_points": [
+      "Variance-Aware Sampling (VAS) promotes reward variance and stabilizes policy optimization",
+      "Large-scale resources released for multimodal reasoning models, including 1.6M long CoT cold-start data and 15k RL QA pairs",
+      "GRPO prone to gradient vanishing when reward variance is low"
+    ],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:34:45.699174"
+  },
+  {
+    "id": 9,
+    "title": "Data-Centric Elastic Pipeline Parallelism for Efficient Long-Context LLM\n  Training",
+    "authors": "Shiju Wang, Yujie Wang, Ao Sun, Fangcheng Fu, Zijian Zhu, Bin Cui, Xu Han, Kaisheng Ma",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21275v1",
+    "summary": "Here is a summary of the article in 2 concise paragraphs:\n\nThe article discusses the importance of long context training for Large Language Models (LLMs) in extending their contextual understanding. Existing methods, such as sequence parallelism, are limited by substantial communication overhead. Pipeline parallelism (PP) offers a solution, but its effectiveness depends on the granularity of partitioning. The authors highlight the trade-off between memory consumption and hardware utilization in PP.\n\nTo address this challenge, the authors propose Elastic Pipeline Parallelism (EPP), which adapts to resource and workload characteristics by orchestrating token-level and batch-level PP. EPP aims to balance workload scheduling and optimize performance, taking into account the skewness of sequence length distribution in real-world datasets.\n\nHere are the key points in JSON format:\n\n{\"summary\": \"The article discusses long context training for LLMs and proposes Elastic Pipeline Parallelism (EPP) to adapt to resource and workload characteristics.\", \"key_points\": [\"Long context training is crucial for LLMs\", \"Pipeline parallelism has a trade-off between memory consumption and hardware utilization\", \"Elastic Pipeline Parallelism adapts to resource and workload characteristics\"]}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:31:20.389008"
+  },
+  {
+    "id": 8,
+    "title": "Vision-Intelligence-Enabled Beam Tracking for Cross-Interface Water-Air\n  Optical Wireless Communications",
+    "authors": "Tianqi Mao, Jiayue Liu, Weijie Liu, Dezhi Zheng, Zhaocheng Wang",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21290v1",
+    "summary": "{\"summary\": \"This article discusses the development of underwater wireless communication technology, specifically focusing on the challenges and opportunities presented by oceanic applications. The authors propose a mathematical channel model for water-air optical wireless transmission to address the issue of beam misalignment caused by the fluctuating sea surface.\", \"key_points\": [\"The escalating demand for real-time wireless backhaul in oceanic applications motivates the development of underwater communication technology\", \"Optical wireless communication (OWC) is a promising solution for maritime and underwater applications due to its potential for broadband transmission\", \"A mathematical channel model is proposed to address the issue of beam misalignment caused by the fluctuating sea surface\"]}\n\nNote: The provided text does not explicitly mention 6G, but it discusses the development of underwater wireless communication technology, which is a key aspect of 6G research.",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:26:44.095931"
+  },
+  {
+    "id": 7,
+    "title": "Air Quality and Greenhouse Gas Emissions Assessment of Data Centers in\n  Texas: Quantifying Impacts and Environmental Tradeoffs",
+    "authors": "Ebrahim Eslami",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21312v1",
+    "summary": "I apologize, but the provided text does not appear to be a 6G article. The topic seems to be related to data centers, air quality, and greenhouse gas emissions in Texas. Since there is no technical information about 6G technology, I will provide a summary based on the available text.\n\n{\"summary\": \"This study assesses the environmental impact of rapid data center expansion in Texas, focusing on air quality and greenhouse gas emissions.\", \"key_points\": [\"Data centers generate significant CO2 emissions from electricity consumption and cooling systems\", \"Local air quality impacts arise from diesel backup generators, construction equipment, and commuting\", \"Mitigation strategies include advanced cooling, renewable energy procurement, and cleaner backup power\"]}",
+    "key_points": [],
+    "week": "2025-38",
+    "created_at": "2025-09-27T22:23:25.919389"
+  }
+]

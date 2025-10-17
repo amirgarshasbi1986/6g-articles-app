@@ -1,0 +1,57 @@
+[
+  {
+    "id": 21,
+    "title": "A Novel Integrated Architecture for Intent Based Approach and Zero Touch\n  Networks",
+    "authors": "Neelam Gupta, Dibakar Das, Tamizhelakkiya K, Uma Maheswari Natarajan, Sharvari Ravindran, Komal Sharma, Jyotsna Bapat, Debabrata Das",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21026v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n```\n{\n  \"summary\": \"Proposal for integrating Intent-Based Networking (IBN) with Zero Touch Network (ZTN) using Machine Learning and Artificial Intel",
+    "key_points": [],
+    "week": "2025-39",
+    "created_at": "2025-09-28T18:16:03.984920"
+  },
+  {
+    "id": 20,
+    "title": "Neural Integrated Sensing and Communication for the MIMO-OFDM Downlink",
+    "authors": "Ziyi Wang, Frederik Zumegen, Christoph Studer",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21118v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n```\n{\n  \"summary\": \"Neural ISAC framework for wireless sensing and communication applications\",\n  \"key_points\": [\n    \"Integrates data-driven learni",
+    "key_points": [],
+    "week": "2025-39",
+    "created_at": "2025-09-28T18:14:09.680729"
+  },
+  {
+    "id": 19,
+    "title": "Adversarially Robust MIMO Physical Layer Authentication for\n  Non-Stationary Channels",
+    "authors": "Ali Khandan Boroujeni, Ghazal Bagheri, Kuranage Roche Rayan Ranasinghe, Giuseppe Thadeu Freitas de Abreu, Stefan K\u00f6psell, Rafael F. Schaefer",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21171v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n```\n{\n  \"summary\": \"Introduces an AR-PLA framework for robust physical layer authentication in non-stationary MIMO wireless channels\",\n  \"key_points",
+    "key_points": [],
+    "week": "2025-39",
+    "created_at": "2025-09-28T18:12:53.828457"
+  },
+  {
+    "id": 18,
+    "title": "Hybrid RIS-Aided Digital Over-the-Air Computing for Edge AI Inference:\n  Joint Feature Quantization and Active-Passive Beamforming Design",
+    "authors": "Yang Fu, Peng Qin, Liming Chen, Yifei Wang",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21201v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n```\n{\n  \"summary\": \"Proposed Hybrid RIS-aided Digital AirComp scheme for edge inference, leveraging AI models and over-the-air computing.\",\n  \"key_p",
+    "key_points": [],
+    "week": "2025-39",
+    "created_at": "2025-09-28T18:11:38.918377"
+  },
+  {
+    "id": 17,
+    "title": "Fundamental Limits of Noncoherent Massive Random Access Networks",
+    "authors": "Grace Villacr\u00e9s, Tobias Koch, Gonzalo Vazquez-Vilar",
+    "publish_date": "2025-09-25",
+    "link": "http://arxiv.org/abs/2509.21300v1",
+    "summary": "Here is the summary and key points in JSON format:\n\n```\n{\n  \"summary\": \"Study on capacity of massive random-access cellular networks with infinite interfering cells, leading to bounds on capacity depe",
+    "key_points": [],
+    "week": "2025-39",
+    "created_at": "2025-09-28T18:09:49.098853"
+  }
+]

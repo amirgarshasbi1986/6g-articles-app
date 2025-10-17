@@ -1,0 +1,95 @@
+[
+  {
+    "id": 84,
+    "title": "Cognitive Radio for Asymmetric Cellular Downlink with Multi-User MIMO",
+    "authors": "Omer Gokalp Serbetci, Lei Chu, Andreas F. Molisch",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.08937v1",
+    "summary": "This paper investigates cognitive radio (CR) technique in 5G networks, focusing on infrastructure-based systems with multi-beam antennas. It formulates a protocol to determine interference and analyzes probabilities of catastrophic interference an...",
+    "key_points": [
+      "Interference determination protocol",
+      "Catastrophic interference probability analysis",
+      "Missed transmission opportunity probability analysis"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:51:18.222523"
+  },
+  {
+    "id": 83,
+    "title": "Low Complexity Detector for XL-MIMO Uplink: A Cross Splitting Based Information Geometry Approach",
+    "authors": "Wenjun Zhang, An-An Lu, Xiqi Gao",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.09039v1",
+    "summary": "This paper proposes a novel detector approach called CS-IGA for uplink signal recovery in XL-MIMO systems, reducing computational complexity by factorizing the natural parameter in the a posteriori distribution.",
+    "key_points": [
+      "CS-IGA reduces per iteration complexity",
+      "Seamless integration of discrete constellation constraints",
+      "Achieves comparable BER performance to Bayes optimal AMP and IGA with lower cost",
+      "Establishes CS-IGA as a practical solution for high-throughput signal detection in next generation XL-MIMO systems"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:49:39.494990"
+  },
+  {
+    "id": 82,
+    "title": "Energy-Efficient Resource Allocation for PA Distortion-Aware M-MIMO OFDM System",
+    "authors": "Siddarth Marwaha, Pawel Kryszkiewicz, Eduard Jorswieck",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.09238v1",
+    "summary": "This article proposes a resource allocation framework for massive MIMO networks, optimizing transmit power and antenna usage while accounting for nonlinear Power Amplifier (PA) distortion. The framework avoids explicit transmit power constraints a...",
+    "key_points": [
+      "Joint optimization of transmit power and antennas",
+      "Nonlinear PA distortion accounted for",
+      "Alternating optimization approach used",
+      "Improved EE performance compared to baselines"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:47:48.636290"
+  },
+  {
+    "id": 80,
+    "title": "Site-Specific RIS Deployment in Cellular Networks via Calibrated Ray Tracing",
+    "authors": "Sina Beyraghi, Javad Shabanpour, Giovanni Geraci, Paul Almasan, Angel Lozano",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.09478v1",
+    "summary": "This article proposes a fully-automated RIS deployment strategy using digital twin simulation, optimizing placement, orientation, and beamforming across 4G, 5G, and 6G frequencies.                    ",
+    "key_points": [
+      "High bandwidth in D-band",
+      "Low atmospheric absorption",
+      "Hardware integration challenges"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:44:26.656954"
+  },
+  {
+    "id": 77,
+    "title": "Power Cable Radiation: A Novel Approach to Underground Mining Connectivity",
+    "authors": "Siphiwe Shandu, Thabiso Moropa, Alain R. Ndjiongue",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.09573v1",
+    "summary": "A study investigates contactless power line communications (CPLC) for underground mining by modeling long-wire antennas. The system-level framework accounts for multipath propagation and attenuation, revealing the significance of wire length on ra...",
+    "key_points": [
+      "Wire length affects radiation",
+      "CPLC transmits electromagnetic waves without electrical contact",
+      "Robust, cost-effective solution for mining power infrastructure",
+      "Enhances mobility and reduces maintenance"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:40:09.471052"
+  },
+  {
+    "id": 75,
+    "title": "VisPile: A Visual Analytics System for Analyzing Multiple Text Documents With Large Language Models and Knowledge Graphs",
+    "authors": "Adam Coscia, Alex Endert",
+    "publish_date": "2025-10-10",
+    "link": "http://arxiv.org/abs/2510.09605v1",
+    "summary": "Researchers developed VisPile, a visual analytics system that leverages AI technologies to enhance sensemaking in intelligence analysis. The tool integrates large language models and knowledge graphs to assist analysts in grouping documents, summa...",
+    "key_points": [
+      "Visual analytics for intelligence analysis",
+      "AI-powered sensemaking",
+      "LLM and KG integration for document analysis"
+    ],
+    "week": "2025-42",
+    "created_at": "2025-10-13T12:37:24.737592"
+  }
+]

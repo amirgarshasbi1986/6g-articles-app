@@ -1,0 +1,29 @@
+from backend.db import Base, session
+from sqlalchemy import Column, Integer, String, Text, DateTime
+from datetime import datetime
+import json
+
+class Article(Base):
+    __tablename__ = 'articles'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(500), nullable=False)
+    authors = Column(String(500))  # Increased from String(200)
+    publish_date = Column(String(100))
+    link = Column(String(500), unique=True)
+    summary = Column(Text)
+    key_points = Column(Text)
+    week = Column(String(10))
+    created_at = Column(DateTime, default=datetime.now)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'authors': self.authors,
+            'publish_date': self.publish_date,
+            'link': self.link,
+            'summary': self.summary,
+            'key_points': json.loads(self.key_points) if self.key_points else [],
+            'week': self.week,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }

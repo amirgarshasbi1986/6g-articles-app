@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>6G Articles</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 sidebar">
+        <h3>Select Week</h3>
+        {% if weeks %}
+          <select id="week-selector" onchange="window.location.href='/?week=' + encodeURIComponent(this.value)">
+            {% for week in weeks %}
+              <option value="{{ week }}" {% if week == selected_week %}selected{% endif %}>{{ week }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <p>No weeks available</p>
+        {% endif %}
+      </div>
+      <div class="col-md-9">
+        <h1>6G Research Articles for Week {{ selected_week }}</h1>
+        {% if articles %}
+          {% for article in articles %}
+            <div class="article-card">
+              <h3>{{ article.title }}</h3>
+              <p><strong>Authors:</strong> {{ article.authors }}</p>
+              <p><strong>Published:</strong> {{ article.publish_date or 'N/A' }}</p>
+              <p><strong>Link:</strong> <a href="{{ article.link }}" target="_blank">View Paper</a></p>
+              <p><strong>Summary:</strong> {{ article.summary }}</p>
+              <p><strong>Key Points:</strong></p>
+              <ul>
+                {% for point in article.key_points %}
+                  <li>{{ point }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No articles found for week {{ selected_week }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

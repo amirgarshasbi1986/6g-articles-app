@@ -1,0 +1,37 @@
+##check service
+systemctl status 6g-articles-app
+##check running app
+curl http://localhost:5000/health
+##get report manually
+curl -X POST http://localhost:5000/api/trigger-search -H "Content-Type: application/json"
+##check logs
+journalctl -u 6g-articles-app -n 100
+##check database
+psql -U wiseman -d db_6g -h localhost -c "SELECT title, authors, summary, key_points FROM article ORDER BY created_at DESC LIMIT 10;"
+##check result
+ls /home/6g-articles-app/backend/articles_week_*.json
+cat /home/6g-articles-app/backend/articles_week_$(date +%Y-%W).json
+##check ollama
+systemctl status ollama
+##check ollama models
+curl http://localhost:11434/api/tags
+##if ollama failed model
+ollama pull llama3:8b-instruct-q4_g
+##run frontend
+systemctl status 6g-articles-ui
+##put model
+ollama pull llama3.2
+ollama list
+##export
+export PYTHONPATH=/home/6g-articles-app
+##check summarizer
+export PYTHONPATH=/home/6g-articles-app
+python -c "from backend.summarizer import generate_summary; print(generate_summary('6G networks improve speed and connectivity using AI and terahertz bands for ultra-low latency.'))"
+#clear database for check
+psql -U wiseman -d db_6g -h localhost -c "DELETE FROM articles WHERE week='2025-40';"
+#check syntax
+python3 -m py_compile /home/6g-articles-app/ui.py
+##check video and audio codec
+ffprobe videos.mp4
+ffmpeg -i input.mp4 -c:v libx264 -c:a aac output.mp4
+ffmpeg -i input.mp3 -c:a mp3 output.mp3
