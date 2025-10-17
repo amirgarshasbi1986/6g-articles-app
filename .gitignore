@@ -1,5 +1,7 @@
 # Virtual env
 backend/venv/
+backend/.env
+backend/backup/
 # Python cache
 __pycache__/
 *.pyc
@@ -10,6 +12,7 @@ __pycache__/
 videos/
 podcasts/
 articles/
+frontend_backup/
 # Logs/temp
 *.log
 *.tmp
