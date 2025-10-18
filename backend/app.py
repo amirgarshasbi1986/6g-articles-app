@@ -27,9 +27,11 @@ def run_weekly_job():
             logger.info(f"Skipping old article: {article['title'][:50]}")
             continue
         logger.info(f"Processing article: {article['title'][:50]}...")
-        # Check for duplicates in current week only
-        if session.query(Article).filter_by(link=article['link'], week=week_str).first():
-            logger.info(f"Skipping duplicate: {article['title'][:50]}")
+        # Check for duplicates globally by link (ignore week)
+        with session.no_autoflush():  # Prevent autoflush during query
+            existing = session.query(Article).filter_by(link=article['link']).first()
+        if existing:
+            logger.info(f"Skipping duplicate article (already exists from previous week): {article['title'][:50]} (Link: {article['link']})")
             continue
         summary_data = generate_summary(article['full_text'])
         logger.info(f"Summary for {article['title'][:50]}: summary={summary_data['summary'][:100]}..., key_points={summary_data['key_points']}")
@@ -48,7 +50,7 @@ def run_weekly_job():
         session.add(new_article)
         saved_count += 1
     session.commit()
-    logger.info(f"Saved {saved_count} articles for week {week_str}")
+    logger.info(f"Saved {saved_count} new articles for week {week_str}")
 
     # Export to JSON
     current_week_articles = session.query(Article).filter_by(week=week_str).order_by(Article.created_at.desc()).limit(10).all()
@@ -59,6 +61,6 @@ def run_weekly_job():
     logger.info(f"Exported {len(json_data)} articles to {json_file}")
 
 if __name__ == '__main__':
-    Base.metadata.create_all(bind=session.bind)  # Create tables
+    Base.metadata.create_all(bind=session.bind)  # Create tables if needed
     run_weekly_job()
     session.close()
