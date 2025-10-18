@@ -28,7 +28,7 @@ def run_weekly_job():
             continue
         logger.info(f"Processing article: {article['title'][:50]}...")
         # Check for duplicates globally by link (ignore week)
-        with session.no_autoflush():  # Prevent autoflush during query
+        with session.no_autoflush:  # Fixed: Removed parentheses
             existing = session.query(Article).filter_by(link=article['link']).first()
         if existing:
             logger.info(f"Skipping duplicate article (already exists from previous week): {article['title'][:50]} (Link: {article['link']})")
