@@ -50,7 +50,7 @@ def arxiv_search(query='6G', max_results=5):
         search = arxiv.Search(
             query=query,
             max_results=max_results,
-            sort_by=arxiv.SortCriterion.SubmittedDate,
+            sort_by=arxiv.SortCriterion.Relevance,  # Changed to Relevance
             sort_order=arxiv.SortOrder.Descending
         )
         results = list(client.results(search))
@@ -66,7 +66,7 @@ def arxiv_search(query='6G', max_results=5):
                 'link': f"http://arxiv.org/abs/{result.entry_id.split('/')[-1]}",
                 'full_text': result.summary
             })
-        logger.info(f"arXiv fetched {len(articles)} articles for query '{query}'")
+        logger.info(f"arXiv fetched {len(articles)} articles for query '{query}' sorted by relevance")
         return articles
     except Exception as e:
         logger.error(f"arXiv error for query '{query}': {e}")
@@ -75,7 +75,7 @@ def arxiv_search(query='6G', max_results=5):
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10), retry=retry_if_exception_type(requests.exceptions.HTTPError))
 def semantic_search(query='6G wireless communication', max_results=5):
     url = 'https://api.semanticscholar.org/graph/v1/paper/search'
-    params = {'query': urllib.parse.quote(query), 'limit': max_results, 'fields': 'title,authors,publicationDate,url,abstract'}
+    params = {'query': urllib.parse.quote(query), 'limit': max_results, 'fields': 'title,authors,publicationDate,url,abstract', 'sort': 'relevance'}  # Added sort=relevance
     try:
         response = requests.get(url, params=params, timeout=10, headers=headers)
         if response.status_code == 429:
@@ -85,18 +85,17 @@ def semantic_search(query='6G wireless communication', max_results=5):
         data = response.json()
         articles = []
         for p in data.get('data', []):
-            if p.get('abstract') and len(p['abstract']) > 50:
-                authors = ', '.join(a['name'] for a in p.get('authors', []))
-                if len(authors) > 1000:
-                    authors = authors[:950] + ' ... et al.'
-                articles.append({
-                    'title': p['title'],
-                    'authors': authors,
-                    'publish_date': datetime.strptime(p['publicationDate'], '%Y-%m-%d').date() if p.get('publicationDate') else None,
-                    'link': p['url'],
-                    'full_text': p['abstract']
-                })
-        logger.info(f"Semantic Scholar fetched {len(articles)} articles for query '{query}'")
+            authors = ', '.join(a['name'] for a in p.get('authors', []))
+            if len(authors) > 1000:
+                authors = authors[:950] + ' ... et al.'
+            articles.append({
+                'title': p['title'],
+                'authors': authors,
+                'publish_date': datetime.strptime(p['publicationDate'], '%Y-%m-%d').date() if p.get('publicationDate') else None,
+                'link': p['url'],
+                'full_text': p['abstract']
+            })
+        logger.info(f"Semantic Scholar fetched {len(articles)} articles for query '{query}' sorted by relevance")
         return articles
     except requests.exceptions.HTTPError as e:
         if response.status_code == 429:
@@ -136,6 +135,17 @@ def scholarly_search(query='6G wireless communication', max_results=5):
         logger.error(f"Google Scholar error for query '{query}': {e}")
         return []
 
+# New function for relevance scoring
+def calculate_relevance(article):
+    title = article['title'].lower()
+    full_text = article['full_text'].lower()
+    text = title + ' ' + full_text
+    score = 0
+    for kw in G6_KEYWORDS:
+        if kw.lower() in text:
+            score += 1
+    return score
+
 def weekly_search():
     all_articles = []
     selected_keywords = G6_KEYWORDS  # All 24 keywords
@@ -146,6 +156,7 @@ def weekly_search():
 
     all_articles += scholarly_search(G6_KEYWORDS[0])
 
+    # Dedup and score
     seen = set()
     unique = []
     # Temporarily disable date filter for debugging
@@ -154,9 +165,13 @@ def weekly_search():
         # if a.get('publish_date') and a['publish_date'] < one_month_ago.date():
         #     continue
         key = (a['title'], a.get('link', ''))
-        if key not in seen and len(unique) < 10:
+        if key not in seen:
             seen.add(key)
+            a['relevance_score'] = calculate_relevance(a)
             unique.append(a)
 
-    logger.info(f"Fetched {len(all_articles)} total articles, {len(unique)} unique after dedup (capped at 10)")
+    # Sort by relevance score descending
+    unique = sorted(unique, key=lambda x: x['relevance_score'], reverse=True)[:10]
+
+    logger.info(f"Fetched {len(all_articles)} total articles, {len(unique)} unique after dedup and relevance sort (top 10)")
     return unique
