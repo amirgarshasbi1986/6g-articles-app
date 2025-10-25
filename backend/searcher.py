@@ -7,30 +7,48 @@ import logging
 import time
 import urllib.parse
 import arxiv
+from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Reduced to top 10 keywords to avoid Semantic Scholar rate limit
 G6_KEYWORDS = [
     '6G wireless communication',
     '6G terahertz communication',
     '6G ultra-massive MIMO',
     '6G integrated sensing and communication',
     '6G quantum communication',
+    '6G dynamic spectrum sharing',
     '6G AI-native networks',
     '6G holographic connectivity',
+    '6G ubiquitous connectivity',
+    '6G deep connectivity',
+    '6G intelligent connectivity',
+    '6G THz bands',
+    '6G in-band full-duplex',
+    '6G visible light communication',
+    '6G orbital angular momentum',
+    '6G energy efficiency',
     '6G ultra-reliable low latency',
+    '6G ultra-high reliability',
+    '6G spectral efficiency',
     '6G machine learning',
-    '6G edge computing'
+    '6G edge computing',
+    '6G quantum key distribution',
+    '6G backscatter communications',
+    '6G multiuser MIMO',
+    '6G post-quantum security'
 ]
 
 headers = {
-    'User-Agent': '6G-Articles-App/1.0 (mailto:amir.gr86@gmail.com)',
-    'Accept': 'application/json'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1'
 }
 
-def arxiv_search(query='6G', max_results=20):
+def arxiv_search(query='6G', max_results=10):
     try:
         client = arxiv.Client()
         search = arxiv.Search(
@@ -59,7 +77,7 @@ def arxiv_search(query='6G', max_results=20):
         return []
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10), retry=retry_if_exception_type(requests.exceptions.HTTPError))
-def semantic_search(query='6G wireless communication', max_results=20):
+def semantic_search(query='6G wireless communication', max_results=10):
     url = 'https://api.semanticscholar.org/graph/v1/paper/search'
     params = {'query': urllib.parse.quote(query), 'limit': max_results, 'fields': 'title,authors,publicationDate,url,abstract', 'sort': 'relevance'}
     try:
@@ -93,11 +111,11 @@ def semantic_search(query='6G wireless communication', max_results=20):
         logger.error(f"Semantic Scholar error for query '{query}': {e}")
         return []
 
-def openalex_search(query='6G wireless communication', max_results=20):
+def openalex_search(query='6G wireless communication', max_results=10):
     logger.info(f"Skipping OpenAlex for query '{query}' due to persistent 403 errors")
     return []
 
-def scholarly_search(query='6G wireless communication', max_results=20):
+def scholarly_search(query='6G wireless communication', max_results=10):
     try:
         search_query = scholarly.search_pubs(query)
         articles = []
@@ -121,107 +139,58 @@ def scholarly_search(query='6G wireless communication', max_results=20):
         logger.error(f"Google Scholar error for query '{query}': {e}")
         return []
 
-def core_search(query='6G wireless communication', max_results=20):
+def flexible_scrape_sciencedirect(query='6G wireless communication', max_results=10):
     try:
-        url = 'https://api.core.ac.uk/v3/search/works'
-        params = {'q': query, 'limit': max_results}
-        response = requests.get(url, params=params, headers=headers, timeout=10)
+        search_url = f"https://www.sciencedirect.com/search?qs={urllib.parse.quote(query)}"
+        response = requests.get(search_url, headers=headers, timeout=10)
         response.raise_for_status()
-        data = response.json()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        results = soup.find_all('li', class_='js-result-item', limit=max_results)
         articles = []
-        for item in data.get('results', []):
-            # Handle authors as list of dicts
-            authors_list = item.get('authors', [])
-            authors = ', '.join(a.get('name', '') for a in authors_list if isinstance(a, dict) and a.get('name'))
-            if not authors and isinstance(authors_list, list):
-                authors = ', '.join(str(a) for a in authors_list if isinstance(a, str))  # Fallback for string list
-            if len(authors) > 1000:
-                authors = authors[:950] + ' ... et al.'
-            title = item.get('title', 'No title available')
-            if not title:
-                logger.warning(f"Skipping CORE item with no title for query '{query}'")
-                continue
+        for result in results:
+            title_elem = result.find('a', class_='js-article-title')
+            title = title_elem.text.strip() if title_elem else 'No title'
+            link = 'https://www.sciencedirect.com' + title_elem['href'] if title_elem else 'No link'
+            authors_elem = result.find('ol', class_='Authors')
+            authors = ', '.join(span.text for span in authors_elem.find_all('span', class_='content')) if authors_elem else 'No authors'
+            date_elem = result.find('span', class_='js-publication-year')
+            date = date_elem.text.strip() if date_elem else 'No date'
+            abstract_elem = result.find('p', class_='js-abstract-truncated-text')
+            abstract = abstract_elem.text.strip() if abstract_elem else 'No abstract'
+
+            # To get full abstract, fetch article page
+            if link != 'No link':
+                try:
+                    article_response = requests.get(link, headers=headers, timeout=10)
+                    article_soup = BeautifulSoup(article_response.text, 'html.parser')
+                    full_abstract_elem = article_soup.find('div', class_='Abstracts u-font-serif')
+                    full_abstract = full_abstract_elem.text.strip() if full_abstract_elem else abstract
+                except Exception as e:
+                    logger.warning(f"Failed to fetch full abstract for '{title}': {e}")
+                    full_abstract = abstract
+            else:
+                full_abstract = abstract
+
             articles.append({
                 'title': title,
                 'authors': authors,
-                'publish_date': datetime.strptime(item['publishedDate'], '%Y-%m-%d').date() if item.get('publishedDate') else None,
-                'link': item.get('downloadUrl', item.get('doi', '')) or 'https://core.ac.uk',
-                'full_text': item.get('abstract', '')
+                'publish_date': date,
+                'link': link,
+                'full_text': full_abstract
             })
-        logger.info(f"CORE fetched {len(articles)} articles for query '{query}'")
+        logger.info(f"ScienceDirect scraped {len(articles)} articles for query '{query}'")
         return articles
     except Exception as e:
-        logger.error(f"CORE error for query '{query}': {e}")
+        logger.error(f"ScienceDirect scrape error for query '{query}': {e}")
         return []
-
-def crossref_search(query='6G wireless communication', max_results=20):
-    try:
-        url = 'https://api.crossref.org/works'
-        params = {'query': query, 'rows': max_results, 'sort': 'relevance'}
-        response = requests.get(url, params=params, headers=headers, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        articles = []
-        for item in data.get('message', {}).get('items', []):
-            title = item.get('title', ['No title available'])
-            if isinstance(title, list):
-                title = title[0] if title else 'No title available'
-            if title == 'No title available':
-                logger.warning(f"Skipping Crossref item with no title for query '{query}'")
-                continue
-            authors = ', '.join(a.get('family', '') + ' ' + a.get('given', '') for a in item.get('author', []) if a.get('family'))
-            if len(authors) > 1000:
-                authors = authors[:950] + ' ... et al.'
-            publish_date = item.get('published', {}).get('date-parts', [[None]])[0][0]
-            articles.append({
-                'title': title,
-                'authors': authors,
-                'publish_date': datetime.strptime(str(publish_date), '%Y').date() if publish_date else None,
-                'link': item.get('URL', 'https://crossref.org'),
-                'full_text': item.get('abstract', '')
-            })
-        logger.info(f"Crossref fetched {len(articles)} articles for query '{query}'")
-        return articles
-    except Exception as e:
-        logger.error(f"Crossref error for query '{query}': {e}")
-        return []
-
-def unpaywall_enrich(articles):
-    enriched = []
-    for a in articles:
-        doi = a['link'].split('abs/')[-1] if 'arxiv' in a['link'] else None
-        if doi:
-            try:
-                url = f'https://api.unpaywall.org/{doi}?email=amir.gr86@gmail.com'
-                response = requests.get(url, timeout=5)
-                if response.status_code == 200:
-                    data = response.json()
-                    oa_url = data.get('best_oa_location', {}).get('url_for_pdf', a['link'])
-                    a['link'] = oa_url
-                    logger.info(f"Unpaywall enriched link for {a['title'][:50]}")
-            except Exception as e:
-                logger.error(f"Unpaywall error for {a['title'][:50]}: {e}")
-        enriched.append(a)
-    return enriched
-
-def calculate_relevance(article):
-    title = article['title'].lower()
-    full_text = article['full_text'].lower()
-    text = title + ' ' + full_text
-    score = 0
-    for kw in G6_KEYWORDS:
-        if kw.lower() in text:
-            score += 1
-    return score
 
 def weekly_search():
     all_articles = []
-    selected_keywords = G6_KEYWORDS  # Now 10 keywords
+    selected_keywords = G6_KEYWORDS
     for keyword in selected_keywords:
         all_articles += arxiv_search(keyword)
         all_articles += semantic_search(keyword)
-        all_articles += core_search(keyword)
-        all_articles += crossref_search(keyword)
+        all_articles += flexible_scrape_sciencedirect(keyword)
         time.sleep(5)
 
     all_articles += scholarly_search(G6_KEYWORDS[0])
