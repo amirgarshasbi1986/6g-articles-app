@@ -8,6 +8,8 @@ import time
 import urllib.parse
 import arxiv
 import os
+import json
+import pathlib
 
 # Try to import ELSEVIER_API_KEY from config.py or environment
 try:
