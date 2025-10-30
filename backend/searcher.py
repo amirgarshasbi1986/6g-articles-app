@@ -1,3 +1,4 @@
+# backend/searcher.py
 import requests
 import feedparser
 from scholarly import scholarly
@@ -9,19 +10,27 @@ import urllib.parse
 import arxiv
 import os
 import json
-import pathlib
+import pathlib   # <-- pathlib is back for the backup folder
 
-# Try to import ELSEVIER_API_KEY from config.py or environment
+# ----------------------------------------------------------------------
+# API keys – try config.py first, then environment variables
+# ----------------------------------------------------------------------
 try:
-    from backend.config import ELSEVIER_API_KEY
+    from backend.config import CORE_API_KEY, ELSEVIER_API_KEY
 except ImportError:
+    CORE_API_KEY = os.getenv('CORE_API_KEY', '')
     ELSEVIER_API_KEY = os.getenv('ELSEVIER_API_KEY', '')
+    if not CORE_API_KEY:
+        logging.getLogger(__name__).warning("CORE_API_KEY not set – CORE will be rate-limited")
     if not ELSEVIER_API_KEY:
-        logger.warning("ELSEVIER_API_KEY not found in config.py or environment; ScienceDirect search will be skipped")
+        logging.getLogger(__name__).warning("ELSEVIER_API_KEY not set – ScienceDirect will be skipped")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ----------------------------------------------------------------------
+# 6G keyword list
+# ----------------------------------------------------------------------
 G6_KEYWORDS = [
     '6G wireless communication',
     '6G terahertz communication',
@@ -40,7 +49,16 @@ headers = {
     'Accept': 'application/json'
 }
 
-def arxiv_search(query='6G', max_results=20):
+# ----------------------------------------------------------------------
+# Helper – safe string conversion
+# ----------------------------------------------------------------------
+def _safe_str(val):
+    return '' if val is None else str(val)
+
+# ----------------------------------------------------------------------
+# Search functions (unchanged except for safe strings & CORE key)
+# ----------------------------------------------------------------------
+def arxiv_search(query='6G', max_results=30):
     try:
         client = arxiv.Client()
         search = arxiv.Search(
@@ -51,16 +69,16 @@ def arxiv_search(query='6G', max_results=20):
         )
         results = list(client.results(search))
         articles = []
-        for result in results:
-            authors = ', '.join([author.name for author in result.authors])
+        for r in results:
+            authors = ', '.join([a.name for a in r.authors])
             if len(authors) > 1000:
                 authors = authors[:950] + ' ... et al.'
             articles.append({
-                'title': result.title or 'No title available',
+                'title': _safe_str(r.title),
                 'authors': authors,
-                'publish_date': result.published.date() if result.published else None,
-                'link': f"http://arxiv.org/abs/{result.entry_id.split('/')[-1]}",
-                'full_text': result.summary or ''
+                'publish_date': r.published.date() if r.published else None,
+                'link': f"http://arxiv.org/abs/{r.entry_id.split('/')[-1]}",
+                'full_text': _safe_str(r.summary)
             })
         logger.info(f"arXiv fetched {len(articles)} articles for query '{query}'")
         return articles
@@ -68,118 +86,119 @@ def arxiv_search(query='6G', max_results=20):
         logger.error(f"arXiv error for query '{query}': {e}")
         return []
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10), retry=retry_if_exception_type(requests.exceptions.HTTPError))
-def semantic_search(query='6G wireless communication', max_results=20):
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10),
+       retry=retry_if_exception_type(requests.exceptions.HTTPError))
+def semantic_search(query='6G wireless communication', max_results=30):
     url = 'https://api.semanticscholar.org/graph/v1/paper/search'
-    params = {'query': urllib.parse.quote(query), 'limit': max_results, 'fields': 'title,authors,publicationDate,url,abstract', 'sort': 'relevance'}
+    params = {
+        'query': urllib.parse.quote(query),
+        'limit': max_results,
+        'fields': 'title,authors,publicationDate,url,abstract',
+        'sort': 'relevance'
+    }
     try:
-        response = requests.get(url, params=params, timeout=10, headers=headers)
-        if response.status_code == 429:
-            logger.warning(f"Semantic Scholar rate limit (429) for query '{query}', returning empty list")
+        resp = requests.get(url, params=params, timeout=10, headers=headers)
+        if resp.status_code == 429:
+            logger.warning(f"Semantic Scholar rate limit (429) for query '{query}'")
             return []
-        response.raise_for_status()
-        data = response.json()
+        resp.raise_for_status()
+        data = resp.json()
         articles = []
         for p in data.get('data', []):
             authors = ', '.join(a['name'] for a in p.get('authors', []))
             if len(authors) > 1000:
                 authors = authors[:950] + ' ... et al.'
             articles.append({
-                'title': p['title'] or 'No title available',
+                'title': _safe_str(p.get('title')),
                 'authors': authors,
-                'publish_date': datetime.strptime(p['publicationDate'], '%Y-%m-%d').date() if p.get('publicationDate') else None,
-                'link': p['url'] or 'https://semanticscholar.org',
-                'full_text': p['abstract'] or ''
+                'publish_date': datetime.strptime(p['publicationDate'], '%Y-%m-%d').date()
+                                if p.get('publicationDate') else None,
+                'link': p.get('url') or '',
+                'full_text': _safe_str(p.get('abstract'))
             })
         logger.info(f"Semantic Scholar fetched {len(articles)} articles for query '{query}'")
         return articles
-    except requests.exceptions.HTTPError as e:
-        if response.status_code == 429:
-            logger.warning(f"Semantic Scholar rate limit (429) for query '{query}', returning empty list")
-            return []
-        logger.error(f"Semantic Scholar error for query '{query}': {e}")
-        raise
     except Exception as e:
         logger.error(f"Semantic Scholar error for query '{query}': {e}")
         return []
 
-def openalex_search(query='6G wireless communication', max_results=20):
-    logger.info(f"Skipping OpenAlex for query '{query}' due to persistent 403 errors")
+def openalex_search(*_):
+    logger.info("OpenAlex is disabled (403).")
     return []
 
-def scholarly_search(query='6G wireless communication', max_results=20):
+def scholarly_search(query='6G wireless communication', max_results=30):
     try:
-        search_query = scholarly.search_pubs(query)
         articles = []
-        for i, result in enumerate(search_query):
+        for i, res in enumerate(scholarly.search_pubs(query)):
             if i >= max_results:
                 break
             try:
-                authors = ', '.join(result['bib']['author'] or [])
+                authors = ', '.join(res['bib'].get('author', []))
                 if len(authors) > 1000:
                     authors = authors[:950] + ' ... et al.'
-                title = result['bib']['title'] or 'No title available'
-                pub_year = result['bib'].get('pub_year')
-                publish_date = datetime.strptime(pub_year, '%Y').date() if pub_year else None
-                link = result.get('eprinturl', result.get('pub_url', ''))
-                full_text = result.get('abstract', '') or ''
                 articles.append({
-                    'title': title,
+                    'title': _safe_str(res['bib'].get('title')),
                     'authors': authors,
-                    'publish_date': publish_date,
-                    'link': link or 'https://scholar.google.com',
-                    'full_text': full_text
+                    'publish_date': datetime.strptime(res['bib']['pub_year'], '%Y').date()
+                                    if res['bib'].get('pub_year') else None,
+                    'link': res.get('eprinturl') or res.get('pub_url') or '',
+                    'full_text': _safe_str(res.get('abstract'))
                 })
-            except Exception as e:
-                logger.warning(f"Skipping invalid Google Scholar result for query '{query}': {e}")
+            except Exception as sub_e:
+                logger.warning(f"Skipping malformed Scholar result: {sub_e}")
                 continue
-            time.sleep(1)  # Avoid rate limits
+            time.sleep(1)
         logger.info(f"Google Scholar fetched {len(articles)} articles for query '{query}'")
         return articles
     except Exception as e:
         logger.error(f"Google Scholar error for query '{query}': {e}")
         return []
 
-@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60), retry=retry_if_exception_type(requests.exceptions.HTTPError))
-def core_search(query='6G wireless communication', max_results=20):
+@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60),
+       retry=retry_if_exception_type(requests.exceptions.HTTPError))
+def core_search(query='6G wireless communication', max_results=30):
     try:
         url = 'https://api.core.ac.uk/v3/search/works'
         params = {'q': query, 'limit': max_results}
-        response = requests.get(url, params=params, headers=headers, timeout=10)
-        if response.status_code == 429:
-            logger.warning(f"CORE rate limit (429) for query '{query}', retrying after backoff")
+        if CORE_API_KEY:
+            params['apiKey'] = CORE_API_KEY
+        resp = requests.get(url, params=params, headers=headers, timeout=10)
+        if resp.status_code == 429:
+            logger.warning(f"CORE rate limit (429) for query '{query}'")
             raise requests.exceptions.HTTPError("429")
-        response.raise_for_status()
-        data = response.json()
+        resp.raise_for_status()
+        data = resp.json()
         articles = []
         for item in data.get('results', []):
             authors_list = item.get('authors', [])
-            authors = ', '.join(a.get('name', '') for a in authors_list if isinstance(a, dict) and a.get('name'))
+            authors = ', '.join(
+                a.get('name', '') for a in authors_list
+                if isinstance(a, dict) and a.get('name')
+            )
             if not authors and isinstance(authors_list, list):
                 authors = ', '.join(str(a) for a in authors_list if isinstance(a, str))
             if len(authors) > 1000:
                 authors = authors[:950] + ' ... et al.'
             title = item.get('title', 'No title available')
             if title == 'No title available':
-                logger.warning(f"Skipping CORE item with no title for query '{query}'")
+                logger.warning(f"Skipping CORE item without title (query: {query})")
                 continue
-            publish_date = item.get('publishedDate')
+            pub_date = item.get('publishedDate')
             date_obj = None
-            if publish_date:
+            if pub_date:
                 try:
-                    date_obj = datetime.strptime(publish_date, '%Y-%m-%dT%H:%M:%S').date()
+                    date_obj = datetime.strptime(pub_date, '%Y-%m-%dT%H:%M:%S').date()
                 except ValueError:
                     try:
-                        date_obj = datetime.strptime(publish_date, '%Y-%m-%d').date()
+                        date_obj = datetime.strptime(pub_date, '%Y-%m-%d').date()
                     except ValueError:
-                        logger.warning(f"Invalid date format for CORE item '{title}': {publish_date}")
-                        date_obj = None
+                        logger.warning(f"Bad date format for CORE title '{title}': {pub_date}")
             articles.append({
                 'title': title,
                 'authors': authors,
                 'publish_date': date_obj,
-                'link': item.get('downloadUrl', item.get('doi', '')) or 'https://core.ac.uk',
-                'full_text': item.get('abstract', '') or ''
+                'link': item.get('downloadUrl') or item.get('doi') or 'https://core.ac.uk',
+                'full_text': _safe_str(item.get('abstract'))
             })
         logger.info(f"CORE fetched {len(articles)} articles for query '{query}'")
         return articles
@@ -187,45 +206,45 @@ def core_search(query='6G wireless communication', max_results=20):
         logger.error(f"CORE error for query '{query}': {e}")
         return []
 
-@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60), retry=retry_if_exception_type(requests.exceptions.HTTPError))
-def sciencedirect_search(query='6G wireless communication', max_results=20):
+@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60),
+       retry=retry_if_exception_type(requests.exceptions.HTTPError))
+def sciencedirect_search(query='6G wireless communication', max_results=30):
     if not ELSEVIER_API_KEY:
-        logger.warning(f"ScienceDirect error: No API key provided for query '{query}', skipping")
+        logger.warning(f"ScienceDirect skipped (no API key) for query '{query}'")
         return []
     try:
         url = 'https://api.elsevier.com/content/search/sciencedirect'
-        headers_sd = headers.copy()
-        headers_sd['X-ELS-APIKey'] = ELSEVIER_API_KEY
+        hd = headers.copy()
+        hd['X-ELS-APIKey'] = ELSEVIER_API_KEY
         params = {'query': query, 'count': max_results}
-        response = requests.get(url, params=params, headers=headers_sd, timeout=10)
-        if response.status_code == 429:
-            logger.warning(f"ScienceDirect rate limit (429) for query '{query}', retrying after backoff")
+        resp = requests.get(url, params=params, headers=hd, timeout=10)
+        if resp.status_code == 429:
+            logger.warning(f"ScienceDirect rate limit (429) for query '{query}'")
             raise requests.exceptions.HTTPError("429")
-        response.raise_for_status()
-        data = response.json()
+        resp.raise_for_status()
+        data = resp.json()
         articles = []
         for item in data.get('search-results', {}).get('entry', []):
             title = item.get('dc:title', 'No title available')
             if title == 'No title available':
-                logger.warning(f"Skipping ScienceDirect item with no title for query '{query}'")
+                logger.warning(f"Skipping ScienceDirect item without title (query: {query})")
                 continue
             authors = ', '.join(a.get('creator', '') for a in item.get('authors', {}).get('author', []))
             if len(authors) > 1000:
                 authors = authors[:950] + ' ... et al.'
-            publish_date = item.get('prism:coverDate', '')
+            pub_date = item.get('prism:coverDate', '')
             date_obj = None
-            if publish_date:
+            if pub_date:
                 try:
-                    date_obj = datetime.strptime(publish_date, '%Y-%m-%d').date()
+                    date_obj = datetime.strptime(pub_date, '%Y-%m-%d').date()
                 except ValueError:
-                    logger.warning(f"Invalid date format for ScienceDirect item '{title}': {publish_date}")
-                    date_obj = None
+                    logger.warning(f"Bad date for ScienceDirect title '{title}': {pub_date}")
             articles.append({
                 'title': title,
                 'authors': authors,
                 'publish_date': date_obj,
-                'link': item.get('prism:doi', '') or item.get('link', [{}])[1].get('href', 'https://sciencedirect.com'),
-                'full_text': item.get('dc:description', '') or ''
+                'link': item.get('prism:doi') or item.get('link', [{}])[1].get('href', 'https://sciencedirect.com'),
+                'full_text': _safe_str(item.get('dc:description'))
             })
         logger.info(f"ScienceDirect fetched {len(articles)} articles for query '{query}'")
         return articles
@@ -233,31 +252,33 @@ def sciencedirect_search(query='6G wireless communication', max_results=20):
         logger.error(f"ScienceDirect error for query '{query}': {e}")
         return []
 
-def crossref_search(query='6G wireless communication', max_results=20):
+def crossref_search(query='6G wireless communication', max_results=30):
     try:
         url = 'https://api.crossref.org/works'
         params = {'query': query, 'rows': max_results, 'sort': 'relevance'}
-        response = requests.get(url, params=params, headers=headers, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+        resp = requests.get(url, params=params, headers=headers, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
         articles = []
         for item in data.get('message', {}).get('items', []):
             title = item.get('title', ['No title available'])
-            if isinstance(title, list):
-                title = title[0] if title else 'No title available'
+            title = title[0] if isinstance(title, list) and title else 'No title available'
             if title == 'No title available':
-                logger.warning(f"Skipping Crossref item with no title for query '{query}'")
+                logger.warning(f"Skipping Crossref item without title (query: {query})")
                 continue
-            authors = ', '.join(a.get('family', '') + ' ' + a.get('given', '') for a in item.get('author', []) if a.get('family'))
+            authors = ', '.join(
+                f"{a.get('family','')} {a.get('given','')}".strip()
+                for a in item.get('author', []) if a.get('family')
+            )
             if len(authors) > 1000:
                 authors = authors[:950] + ' ... et al.'
-            publish_date = item.get('published', {}).get('date-parts', [[None]])[0][0]
+            pub_year = item.get('published', {}).get('date-parts', [[None]])[0][0]
             articles.append({
                 'title': title,
                 'authors': authors,
-                'publish_date': datetime.strptime(str(publish_date), '%Y').date() if publish_date else None,
+                'publish_date': datetime.strptime(str(pub_year), '%Y').date() if pub_year else None,
                 'link': item.get('URL', 'https://crossref.org'),
-                'full_text': item.get('abstract', '') or ''
+                'full_text': _safe_str(item.get('abstract'))
             })
         logger.info(f"Crossref fetched {len(articles)} articles for query '{query}'")
         return articles
@@ -265,52 +286,70 @@ def crossref_search(query='6G wireless communication', max_results=20):
         logger.error(f"Crossref error for query '{query}': {e}")
         return []
 
+# ----------------------------------------------------------------------
+# Unpaywall enrichment (unchanged)
+# ----------------------------------------------------------------------
 def unpaywall_enrich(articles):
     enriched = []
     for a in articles:
         doi = a['link'].split('abs/')[-1] if 'arxiv' in a['link'] else None
         if doi:
             try:
-                url = f'https://api.unpaywall.org/{doi}?email=amir.gr86@gmail.com'
-                response = requests.get(url, timeout=5)
-                if response.status_code == 200:
-                    data = response.json()
-                    oa_url = data.get('best_oa_location', {}).get('url_for_pdf', a['link'])
-                    a['link'] = oa_url
-                    logger.info(f"Unpaywall enriched link for {a['title'][:50]}")
+                url = f'https://api.unpaywall.org/v2/{doi}?email=amir.gr86@gmail.com'
+                r = requests.get(url, timeout=5)
+                if r.status_code == 200:
+                    data = r.json()
+                    oa = data.get('best_oa_location', {}).get('url_for_pdf')
+                    if oa:
+                        a['link'] = oa
+                        logger.info(f"Unpaywall enriched {a['title'][:50]}")
             except Exception as e:
                 logger.error(f"Unpaywall error for {a['title'][:50]}: {e}")
         enriched.append(a)
     return enriched
 
+# ----------------------------------------------------------------------
+# Improved relevance scoring – partial keyword match + title boost
+# ----------------------------------------------------------------------
 def calculate_relevance(article):
-    title = article.get('title', '').lower() or ''
-    full_text = article.get('full_text', '').lower() or ''
+    title = article.get('title', '').lower()
+    full_text = article.get('full_text', '').lower()
     text = title + ' ' + full_text
+
+    # Split each keyword into its words and count any occurrence
     score = 0
     for kw in G6_KEYWORDS:
-        if kw.lower() in text:
-            score += 1
+        kw_words = kw.lower().split()
+        for w in kw_words:
+            if w in text:
+                score += 1
+                break   # count the keyword only once
+
+    # Give a big boost if the keyword appears in the title
+    for kw in G6_KEYWORDS:
+        if kw.lower() in title:
+            score += 3
+
     return score
-# -----------------------------------------------------------------
-# 1. Increase the “recent” window – 90 days instead of 30
-# -----------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# MAIN weekly search – backup + 180-day recent window
+# ----------------------------------------------------------------------
 def weekly_search():
     all_articles = []
-    selected_keywords = G6_KEYWORDS
-    for keyword in selected_keywords:
-        all_articles += arxiv_search(keyword)
-        all_articles += semantic_search(keyword)
-        all_articles += core_search(keyword)
-        all_articles += crossref_search(keyword)
-        all_articles += sciencedirect_search(keyword)
-        time.sleep(5)
+    for kw in G6_KEYWORDS:
+        all_articles += arxiv_search(kw, max_results=30)
+        all_articles += semantic_search(kw, max_results=30)
+        all_articles += core_search(kw, max_results=30)
+        all_articles += crossref_search(kw, max_results=30)
+        all_articles += sciencedirect_search(kw, max_results=30)
+        time.sleep(5)          # be gentle to all APIs
 
-    all_articles += scholarly_search(G6_KEYWORDS[0])
+    all_articles += scholarly_search(G6_KEYWORDS[0], max_results=30)
 
-    # -------------------------------------------------------------
-    # 2. Deduplicate + relevance score
-    # -------------------------------------------------------------
+    # -------------------------------------------------
+    # Deduplicate
+    # -------------------------------------------------
     seen = set()
     unique = []
     for a in all_articles:
@@ -320,37 +359,40 @@ def weekly_search():
             a['relevance_score'] = calculate_relevance(a)
             unique.append(a)
 
-    # -------------------------------------------------------------
-    # 3. **BACKUP** – dump *every* unique article
-    # -------------------------------------------------------------
+    # -------------------------------------------------
+    # BACKUP – all unique articles
+    # -------------------------------------------------
     backup_dir = pathlib.Path("backend/backup")
     backup_dir.mkdir(parents=True, exist_ok=True)
 
-    week_str = datetime.now().isocalendar()[1]   # e.g. 44
-    year     = datetime.now().year
-    backup_path = backup_dir / f"allresult_week_{year}-{week_str:02d}.json"
+    now = datetime.now()
+    week_num = now.isocalendar()[1]
+    backup_path = backup_dir / f"allresult_week_{now.year}-{week_num:02d}.json"
 
     with open(backup_path, "w", encoding="utf-8") as f:
         json.dump(unique, f, indent=2, default=str)
-    logger.info(f"BACKUP: {len(unique)} unique articles written to {backup_path}")
+    logger.info(f"BACKUP: {len(unique)} unique articles saved to {backup_path}")
 
-    # -------------------------------------------------------------
-    # 4. Filter for *recent* papers (now 90 days)
-    # -------------------------------------------------------------
-    ninety_days_ago = datetime.now() - timedelta(days=90)   # <-- changed
+    # -------------------------------------------------
+    # Filter for recent papers – 180 days
+    # -------------------------------------------------
+    recent_cutoff = now - timedelta(days=180)
     recent = [a for a in unique
-              if a.get('publish_date') and a['publish_date'] >= ninety_days_ago.date()]
+              if a.get('publish_date') and a['publish_date'] >= recent_cutoff.date()]
 
-    # If we still have less than 10, fall back to the highest-scored older ones
+    # If we have fewer than 10 recent, fill with highest-scored older ones
     if len(recent) < 10:
         older = [a for a in unique
-                 if a.get('publish_date') and a['publish_date'] < ninety_days_ago.date()]
-        older = sorted(older, key=lambda x: x['relevance_score'], reverse=True)
+                 if a.get('publish_date') and a['publish_date'] < recent_cutoff.date()]
+        older.sort(key=lambda x: x['relevance_score'], reverse=True)
         recent += older[:10 - len(recent)]
     else:
         recent = recent[:10]
 
     recent = unpaywall_enrich(recent)
-    logger.info(f"Fetched {len(all_articles)} total, {len(unique)} unique. "
-                f"Kept {len(recent)} recent/relevant articles for DB")
+
+    logger.info(
+        f"Fetched {len(all_articles)} total, {len(unique)} unique. "
+        f"Kept {len(recent)} recent/relevant articles for DB."
+    )
     return recent
