@@ -290,7 +290,9 @@ def calculate_relevance(article):
         if kw.lower() in text:
             score += 1
     return score
-
+# -----------------------------------------------------------------
+# 1. Increase the “recent” window – 90 days instead of 30
+# -----------------------------------------------------------------
 def weekly_search():
     all_articles = []
     selected_keywords = G6_KEYWORDS
@@ -304,28 +306,49 @@ def weekly_search():
 
     all_articles += scholarly_search(G6_KEYWORDS[0])
 
+    # -------------------------------------------------------------
+    # 2. Deduplicate + relevance score
+    # -------------------------------------------------------------
     seen = set()
     unique = []
-    one_month_ago = datetime.now() - timedelta(days=30)
     for a in all_articles:
-        key = (a['title'], a.get('link', ''))
+        key = (a.get('title', ''), a.get('link', ''))
         if key not in seen:
             seen.add(key)
-            try:
-                a['relevance_score'] = calculate_relevance(a)
-            except Exception as e:
-                logger.warning(f"Skipping article due to relevance calculation error: {e}, title: {a.get('title', 'Unknown')}")
-                continue
+            a['relevance_score'] = calculate_relevance(a)
             unique.append(a)
 
-    unique = sorted(unique, key=lambda x: x['relevance_score'], reverse=True)
-    recent = [a for a in unique if a.get('publish_date') and a['publish_date'] >= one_month_ago.date()]
+    # -------------------------------------------------------------
+    # 3. **BACKUP** – dump *every* unique article
+    # -------------------------------------------------------------
+    backup_dir = pathlib.Path("backend/backup")
+    backup_dir.mkdir(parents=True, exist_ok=True)
+
+    week_str = datetime.now().isocalendar()[1]   # e.g. 44
+    year     = datetime.now().year
+    backup_path = backup_dir / f"allresult_week_{year}-{week_str:02d}.json"
+
+    with open(backup_path, "w", encoding="utf-8") as f:
+        json.dump(unique, f, indent=2, default=str)
+    logger.info(f"BACKUP: {len(unique)} unique articles written to {backup_path}")
+
+    # -------------------------------------------------------------
+    # 4. Filter for *recent* papers (now 90 days)
+    # -------------------------------------------------------------
+    ninety_days_ago = datetime.now() - timedelta(days=90)   # <-- changed
+    recent = [a for a in unique
+              if a.get('publish_date') and a['publish_date'] >= ninety_days_ago.date()]
+
+    # If we still have less than 10, fall back to the highest-scored older ones
     if len(recent) < 10:
-        additional = [a for a in unique if a.get('publish_date') and a['publish_date'] < one_month_ago.date()][:10 - len(recent)]
-        recent += additional
+        older = [a for a in unique
+                 if a.get('publish_date') and a['publish_date'] < ninety_days_ago.date()]
+        older = sorted(older, key=lambda x: x['relevance_score'], reverse=True)
+        recent += older[:10 - len(recent)]
     else:
         recent = recent[:10]
 
     recent = unpaywall_enrich(recent)
-    logger.info(f"Fetched {len(all_articles)} total articles, {len(unique)} unique after dedup. Filtered to {len(recent)} recent/relevant articles")
+    logger.info(f"Fetched {len(all_articles)} total, {len(unique)} unique. "
+                f"Kept {len(recent)} recent/relevant articles for DB")
     return recent

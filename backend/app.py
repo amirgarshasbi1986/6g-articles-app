@@ -1,4 +1,5 @@
 import os
+import pathlib
 from dotenv import load_dotenv
 from backend.db import Base, session
 from backend.models import Article
@@ -16,7 +17,8 @@ load_dotenv()
 def run_weekly_job():
     logger.info("Starting weekly job")
     current_date = datetime.now()
-    year, week, _ = current_date.isocalendar()
+    week = datetime.now().isocalendar()[1]
+    year = datetime.now().year
     week_str = f"{year}-{week:02d}"
     logger.info(f"Computed week: {week_str}")
     articles = weekly_search()  # Fetch up to 10 articles
