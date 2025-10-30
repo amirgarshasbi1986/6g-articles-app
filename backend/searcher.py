@@ -374,9 +374,9 @@ def weekly_search():
     logger.info(f"BACKUP: {len(unique)} unique articles saved to {backup_path}")
 
     # -------------------------------------------------
-    # Filter for recent papers – 180 days
+    # Filter for recent papers – 365 days
     # -------------------------------------------------
-    recent_cutoff = now - timedelta(days=180)
+    recent_cutoff = now - timedelta(days=365)
     recent = [a for a in unique
               if a.get('publish_date') and a['publish_date'] >= recent_cutoff.date()]
 
