@@ -380,14 +380,14 @@ def weekly_search():
     recent = [a for a in unique
               if a.get('publish_date') and a['publish_date'] >= recent_cutoff.date()]
 
-    # If we have fewer than 10 recent, fill with highest-scored older ones
-    if len(recent) < 10:
+    # If we have fewer than 50 recent, fill with highest-scored older ones
+    if len(recent) < 50:
         older = [a for a in unique
                  if a.get('publish_date') and a['publish_date'] < recent_cutoff.date()]
         older.sort(key=lambda x: x['relevance_score'], reverse=True)
-        recent += older[:10 - len(recent)]
+        recent += older[:50 - len(recent)]
     else:
-        recent = recent[:10]
+        recent = recent[:50]
 
     recent = unpaywall_enrich(recent)
 
