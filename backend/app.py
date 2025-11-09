@@ -24,7 +24,7 @@ def run_weekly_job():
     articles = weekly_search()  # Fetch up to 10 articles
     saved_count = 0
     one_month_ago = current_date - timedelta(days=30)  # Filter to recent articles
-    for article in articles[:10]:
+    for article in articles[:50]:
         if 'publish_date' in article and article['publish_date'] and article['publish_date'] < one_month_ago.date():
             logger.info(f"Skipping old article: {article['title'][:50]}")
             continue
@@ -55,7 +55,7 @@ def run_weekly_job():
     logger.info(f"Saved {saved_count} new articles for week {week_str}")
 
     # Export to JSON
-    current_week_articles = session.query(Article).filter_by(week=week_str).order_by(Article.created_at.desc()).limit(10).all()
+    current_week_articles = session.query(Article).filter_by(week=week_str).order_by(Article.created_at.desc()).limit(50).all()
     json_data = [a.to_dict() for a in current_week_articles]
     json_file = f"articles_week_{week_str}.json"
     with open(json_file, 'w') as f:
