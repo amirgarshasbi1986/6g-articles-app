@@ -10,27 +10,27 @@ import urllib.parse
 import arxiv
 import os
 import json
-import pathlib   # <-- pathlib is back for the backup folder
+import pathlib
 
 # ----------------------------------------------------------------------
 # API keys – try config.py first, then environment variables
 # ----------------------------------------------------------------------
 try:
-    from backend.config import CORE_API_KEY, ELSEVIER_API_KEY
+    from backend.config import CORE_API_KEY, ELSEVIER_API_KEY, IEEE_API_KEY
 except ImportError:
     CORE_API_KEY = os.getenv('CORE_API_KEY', '')
     ELSEVIER_API_KEY = os.getenv('ELSEVIER_API_KEY', '')
+    IEEE_API_KEY = os.getenv('IEEE_API_KEY', '')
     if not CORE_API_KEY:
         logging.getLogger(__name__).warning("CORE_API_KEY not set – CORE will be rate-limited")
     if not ELSEVIER_API_KEY:
         logging.getLogger(__name__).warning("ELSEVIER_API_KEY not set – ScienceDirect will be skipped")
+    if not IEEE_API_KEY:
+        logging.getLogger(__name__).warning("IEEE_API_KEY not set – IEEE Xplore search will be skipped")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ----------------------------------------------------------------------
-# 6G keyword list
-# ----------------------------------------------------------------------
 G6_KEYWORDS = [
     '6G wireless communication',
     '6G terahertz communication',
@@ -49,12 +49,8 @@ headers = {
     'Accept': 'application/json'
 }
 
-# ----------------------------------------------------------------------
-# Helper – safe string conversion
-# ----------------------------------------------------------------------
 def _safe_str(val):
     return '' if val is None else str(val)
-
 # ----------------------------------------------------------------------
 # Search functions (unchanged except for safe strings & CORE key)
 # ----------------------------------------------------------------------
@@ -308,6 +304,60 @@ def unpaywall_enrich(articles):
         enriched.append(a)
     return enriched
 
+----------------------------------------------------------------------
+# NEW: IEEE Xplore search
+# ----------------------------------------------------------------------
+@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60),
+       retry=retry_if_exception_type(requests.exceptions.HTTPError))
+def ieee_search(query='6G wireless communication', max_results=30):
+    if not IEEE_API_KEY:
+        logger.warning(f"IEEE Xplore skipped (no API key) for query '{query}'")
+        return []
+    try:
+        url = 'https://ieeexploreapi.ieee.org/api/v1/search/articles'
+        params = {
+            'apikey': IEEE_API_KEY,
+            'querytext': query,
+            'max_records': max_results,
+            'start_record': 1,
+            'sort_order': 'desc',
+            'sort_field': 'publication_year'
+        }
+        resp = requests.get(url, params=params, headers=headers, timeout=10)
+        if resp.status_code == 429:
+            logger.warning(f"IEEE Xplore rate limit (429) for query '{query}'")
+            raise requests.exceptions.HTTPError("429")
+        resp.raise_for_status()
+        data = resp.json()
+        articles = []
+        for item in data.get('articles', []):
+            title = item.get('title', 'No title available')
+            if title == 'No title available':
+                logger.warning(f"Skipping IEEE item without title (query: {query})")
+                continue
+            authors_list = item.get('authors', {}).get('authors', [])
+            authors = ', '.join(a.get('full_name', '') for a in authors_list)
+            if len(authors) > 1000:
+                authors = authors[:950] + ' ... et al.'
+            pub_year = item.get('publication_year')
+            date_obj = datetime.strptime(str(pub_year), '%Y').date() if pub_year else None
+            doi = item.get('doi')
+            link = f"https://ieeexplore.ieee.org/document/{item.get('article_number')}" if item.get('article_number') else item.get('html_url', 'https://ieeexplore.ieee.org')
+            if doi:
+                link = f"https://doi.org/{doi}"
+            full_text = _safe_str(item.get('abstract'))
+            articles.append({
+                'title': title,
+                'authors': authors,
+                'publish_date': date_obj,
+                'link': link,
+                'full_text': full_text
+            })
+        logger.info(f"IEEE Xplore fetched {len(articles)} articles for query '{query}'")
+        return articles
+    except Exception as e:
+        logger.error(f"IEEE Xplore error for query '{query}': {e}")
+        return []
 # ----------------------------------------------------------------------
 # Improved relevance scoring – partial keyword match + title boost
 # ----------------------------------------------------------------------
@@ -343,6 +393,7 @@ def weekly_search():
         all_articles += core_search(kw, max_results=30)
         all_articles += crossref_search(kw, max_results=30)
         all_articles += sciencedirect_search(kw, max_results=30)
+        all_articles += ieee_search(kw, max_results=30)
         time.sleep(5)          # be gentle to all APIs
 
     all_articles += scholarly_search(G6_KEYWORDS[0], max_results=30)
