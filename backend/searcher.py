@@ -304,7 +304,7 @@ def unpaywall_enrich(articles):
         enriched.append(a)
     return enriched
 
-----------------------------------------------------------------------
+#----------------------------------------------------------------------
 # NEW: IEEE Xplore search
 # ----------------------------------------------------------------------
 @retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=60),
