@@ -7,34 +7,132 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Full-screen hero slider */
+    .hero-carousel .carousel-item {
+      height: 100vh;
+      min-height: 600px;
+      background: no-repeat center center/cover;
+      position: relative;
+    }
+    .hero-carousel .carousel-caption {
+      bottom: 25%;
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    }
+    .hero-carousel .carousel-caption h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .hero-carousel .carousel-caption p {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+    }
+    .hero-carousel .btn {
+      font-size: 1.3rem;
+      padding: 12px 40px;
+    }
+
+    /* Fixed top navigation */
+    .navbar {
+      transition: all 0.3s ease;
+    }
+    .navbar.scrolled {
+      background-color: rgba(0, 0, 0, 0.9) !important;
+      backdrop-filter: blur(10px);
+    }
+    .navbar-brand img {
+      height: 80px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero-carousel .carousel-caption h1 { font-size: 2.8rem; }
+      .hero-carousel .carousel-caption p { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Banner -->
-  <div class="banner-container">
-    <img src="{{ url_for('static', filename='banner.jpg') }}" alt="6G Workgroup MCI Banner" class="banner-image">
-    <div class="banner-overlay">
-      <div class="banner-title-left">
-        <h1>6G Workgroup MCI</h1>
-      </div>
-      <nav class="banner-nav-right">
-        <ul class="nav-list">
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="/articles">Articles</a></li>
-          <li><a href="/videos">Videos</a></li>
-          <li><a href="/podcasts">Podcasts</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 
-  <div class="container mt-4">
+  <!-- Fixed Top Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="6G Workgroup MCI Logo"> <!-- Add your logo -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="/videos">Videos</a></li>
+          <li class="nav-item"><a class="nav-link" href="/podcasts">Podcasts</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Full-Screen Hero Slider -->
+  <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="7000">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <!-- Slide 1: Articles -->
+      <div class="carousel-item active" style="background-image: url('{{ url_for('static', filename='hero-articles.jpg') }}');">
+        <div class="carousel-caption">
+          <h1>Latest 6G Research Articles</h1>
+          <p>Explore cutting-edge papers on 6G technologies, AI-native networks, and more.</p>
+          <a href="/articles" class="btn btn-primary btn-lg">Read Articles</a>
+        </div>
+      </div>
+
+      <!-- Slide 2: Videos -->
+      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='hero-videos.jpg') }}');">
+        <div class="carousel-caption">
+          <h1>6G Explainer Videos</h1>
+          <p>Watch expert talks and demonstrations on future wireless systems.</p>
+          <a href="/videos" class="btn btn-primary btn-lg">Watch Videos</a>
+        </div>
+      </div>
+
+      <!-- Slide 3: Podcasts -->
+      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='hero-podcasts.jpg') }}');">
+        <div class="carousel-caption">
+          <h1>6G Podcasts & Discussions</h1>
+          <p>Listen to in-depth conversations with leading researchers.</p>
+          <a href="/podcasts" class="btn btn-primary btn-lg">Listen Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+ 
+
+  <div class="container mt-5">
     <!-- Videos Section -->
-    <div class="row mb-4">
+    <div class="row mb-5">
       <div class="col-12">
         <h2>Videos</h2>
         {% for video in videos %}
-          <div class="row mb-3">
+          <div class="row mb-4">
             <div class="col-12">
               <div class="card">
                 <div class="card-body d-flex flex-column align-items-center">
@@ -120,13 +218,23 @@
         </div>
       </div>
     </div>
-    <footer class="text-center mt-4">
-      <p>Total Site Views: {{ total_views }}</p>
+    <footer class="text-center py-4 bg-dark text-white mt-5">
+    <p>Total Site Views: {{ total_views }}</p>
     </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+	      // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
     function incrementPlay(type, id) {
       fetch('/api/increment_play', {
         method: 'POST',
